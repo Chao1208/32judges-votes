@@ -1,0 +1,43 @@
+{
+  "version": "EN0.2CH0.4",
+  "target": "Fixed baseline panels relative to empirical 100-label human distributions",
+  "source_type": "Saved results; ratios calculated before rounding. This file is an output reference, not independent evidence.",
+  "datasets": {
+    "mnli_m": {
+      "k": 32,
+      "n_items": 1000,
+      "PR": 4.228177055434586,
+      "nu_H": 4.242076757600779,
+      "nu_MSE": 2.3043394542718785,
+      "nu_H_over_nu_MSE": 1.840907922544417,
+      "E": 0.19691135312500013,
+      "J": 0.45375059999999995,
+      "n_eff": 1.9707705189352767,
+      "gamma_co_all": 0.4384698095238979
+    },
+    "snli": {
+      "k": 32,
+      "n_items": 1000,
+      "PR": 6.421769339614811,
+      "nu_H": 6.459168098640833,
+      "nu_MSE": 3.7496307100877573,
+      "nu_H_over_nu_MSE": 1.722614464742759,
+      "E": 0.09067655625000001,
+      "J": 0.3400036,
+      "n_eff": 2.226550789346305,
+      "gamma_co_all": 0.33719906126581267
+    },
+    "alphanli": {
+      "k": 32,
+      "n_items": 1000,
+      "PR": 6.427160450996994,
+      "nu_H": 6.498981539032674,
+      "nu_MSE": 3.4445085948646685,
+      "nu_H_over_nu_MSE": 1.8867659522527662,
+      "E": 0.04825355937499998,
+      "J": 0.16620980000000002,
+      "n_eff": 1.9990487500569172,
+      "gamma_co_all": 0.3589784488057413
+    }
+  }
+}

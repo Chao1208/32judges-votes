@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "source": "Saved EN0.2CH0.4 supplemental calibration curves; no new Monte Carlo draws.",
+  "calibration_curves_sha256": "ae7e6914176ee0120585767e233ba4e272207fb598ddea8d4422dc4e6fc1bc00",
+  "datasets": {
+    "mnli_m": {
+      "roster_sha256": "1f9a8335e50006703d3a9b7f126d7980c02fc29898c77b2b51fdd9fcbeb1d4ce",
+      "human_reference_sha256": "8fee48d1bef3841d0b737beed1ada38fb0938b0ea96fde10fe52253f306bb939",
+      "supplied_gold_sha256": "2aa0479a8e3c804cf79fedcad62f94ad091a3dde2dd6acc9c403bd524a9470c5",
+      "n_original_items": 1000
+    },
+    "snli": {
+      "roster_sha256": "49ed15ac7666467bfbd416b3db75872cbb54a65dd8be2625553cadda52fed191",
+      "human_reference_sha256": "4bc2af19b7429c7e78276f53c2fceac92494eb53625cf165a3c7313bae3ddd2b",
+      "supplied_gold_sha256": "f90b0a817010e9abc09c632af3e8e14a12fa8131720e9d3991d7e5aa37f211ae",
+      "n_original_items": 1000
+    },
+    "alphanli": {
+      "roster_sha256": "52c865665bf00908fb39a3b600a672f5f40a2e4e7537b0826249da5426839d82",
+      "human_reference_sha256": "f259b7602cab785ea116a4a2db3063f49ea57a63d838b71a5448e8db3a5908b2",
+      "supplied_gold_sha256": "a44eb6009034793a7d336e8abc14ee6a1cff7ff0979b03d1172fbffd3a1e0222",
+      "n_original_items": 1000
+    }
+  }
+}

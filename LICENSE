@@ -1,0 +1,29 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 the authors of "How Many Humans Is a Judge Panel Worth?"
+
+The data in this repository — the judge votes under `votes/` and `votes_swap/`, the item id
+lists under `items/`, and the metadata under `meta/` — are licensed under the Creative Commons
+Attribution 4.0 International License.
+
+  Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+  Full legal code:        https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to share and adapt this material for any purpose, including commercially, provided
+you give appropriate credit (cite the paper and this repository, see README.md), provide a link
+to the license, and indicate if changes were made.
+
+NOT COVERED BY THIS LICENSE
+---------------------------
+This repository does not redistribute ChaosNLI. The premises, hypotheses, observations and the
+100-annotator label distributions live in the ChaosNLI release, which is licensed
+Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0):
+
+  Nie, Y., Zhou, X., & Bansal, M. (2020). What Can We Learn from Collective Human Opinions on
+  Natural Language Inference Data? EMNLP 2020. https://github.com/easonnie/chaos_nli
+
+Joining our votes with ChaosNLI (see `scripts/join_chaosnli.py`) produces a derived dataset that
+is subject to ChaosNLI's non-commercial terms. The item ids in `items/` are reproduced from
+ChaosNLI under attribution as a bare index, so that our votes can be aligned with it.
+
+The code under `scripts/` is licensed separately under the MIT License; see LICENSE-CODE.
