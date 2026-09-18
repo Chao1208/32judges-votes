@@ -26,8 +26,8 @@ label, including its tie resolution, is preserved; the loader never recomputes
 gold with `argmax`. `old_label` is a different target and is not the default.
 
 When the analysis code is supplied separately from the data repository, add
-`--repo-root path/to/chaosnli-judge-votes`. This directory must contain `votes/`,
-`items/`, and `meta/judges.csv`; it need not contain the analysis code. Run the
+`--repo-root path/to/32judges-votes`. This directory must contain `datasets/<dataset_id>/` and `meta/judges.csv`
+(a `v1.0-paper` checkout, with `votes/` and `items/` at the top level, also works); it need not contain the analysis code. Run the
 command from the analysis package directory, or invoke the script by its path.
 
 ## Failure policies and the paper table
@@ -139,7 +139,7 @@ adapts its strict explicit-UID alignment contract without internal registry path
 or collection dependencies. Degenerate-domain checks are explicit in this
 public interface. No API configuration or secret is needed.
 
-Existing votes/items/meta remain under the original `LICENSE` (CC BY 4.0).
+Released votes, item rosters and metadata remain under the original `LICENSE` (CC BY 4.0).
 Existing `scripts/` remain under the unchanged `LICENSE-CODE` (MIT).
 New `src/`, `tests/`, and analysis documentation use `src/LICENSE` (MIT).
 Saved derived calibration/reference summaries in `meta/analysis/` are CC BY 4.0.

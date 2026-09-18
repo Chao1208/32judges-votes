@@ -12,8 +12,8 @@
 ## Step 1：克隆仓库
 
 ```bash
-git clone https://github.com/Chao1208/chaosnli-judge-votes.git
-cd chaosnli-judge-votes
+git clone https://github.com/Chao1208/32judges-votes.git
+cd 32judges-votes
 ```
 
 ## Step 2：建立 Python 环境

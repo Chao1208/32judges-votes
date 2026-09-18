@@ -15,8 +15,8 @@ Step 4 is fully offline and performs zero API calls.
 ## Step 1 — Clone this repository
 
 ```bash
-git clone https://github.com/Chao1208/chaosnli-judge-votes.git
-cd chaosnli-judge-votes
+git clone https://github.com/Chao1208/32judges-votes.git
+cd 32judges-votes
 ```
 
 ## Step 2 — Create an environment
