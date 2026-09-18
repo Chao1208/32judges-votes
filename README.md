@@ -39,6 +39,8 @@ REPRODUCE.md                       Step 1--N guide and single reproduction entry
 reproduce.py                       integrity → tests → paper-table verification
 ```
 
+The paper's principal Civil Comments readout is the frozen 32-judge panel; six frozen panel labels remain in the score-only archive.
+
 `<dataset>` is one of `mnli_m`, `snli`, `alphanli`.
 
 ## Record format
