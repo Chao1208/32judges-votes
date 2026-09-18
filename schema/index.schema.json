@@ -1,0 +1,35 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/Chao1208/32judges-votes/blob/main/schema/index.schema.json",
+ "title": "datasets/index.json",
+ "description": "The dataset registry. Records each dataset's identity and the sha256 of its own manifest — never a copy of the per-file hashes, so adding a dataset touches only its own directory plus this one line.",
+ "type": "object",
+ "additionalProperties": true,
+ "required": ["schema", "repository", "panel_invariant", "datasets"],
+ "properties": {
+  "schema": {"const": "schema/index.schema.json"},
+  "repository": {"type": "string"},
+  "what": {"type": "string"},
+  "panel_invariant": {"type": "string",
+   "description": "Why the repository is named after the panel and not a dataset: every dataset here is judged by the same panel size, 32."},
+  "panel_files": {"type": "array", "items": {"type": "string"}},
+  "datasets": {"type": "array", "minItems": 1, "items": {
+   "type": "object",
+   "required": ["dataset_id", "family", "title", "task_type", "n_items", "panel_k", "arms",
+                "manifest", "manifest_sha256"],
+   "properties": {
+    "dataset_id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+    "family": {"type": "string"},
+    "title": {"type": "string"},
+    "task_type": {"type": "string"},
+    "n_items": {"type": "integer"},
+    "panel_k": {"type": "integer", "const": 32},
+    "arms": {"type": "array", "items": {"type": "string"}},
+    "release_tier": {"enum": ["per_item_votes", "score_only"]},
+    "legacy_key": {"type": ["string", "null"]},
+    "manifest": {"type": "string"},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$",
+     "description": "sha256 of the manifest file's exact bytes, as written by scripts/build_manifests.py."}}}},
+  "generated_by": {"const": "scripts/build_manifests.py"}
+ }
+}

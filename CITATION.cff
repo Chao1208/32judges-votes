@@ -1,0 +1,62 @@
+cff-version: 1.2.0
+message: "If you use these votes, please cite both this dataset and the paper it was released with."
+title: "32judges-votes: per-item votes from a fixed 32-judge LLM panel"
+abstract: >-
+  Per-item judgments from the same panel of 32 LLM judges across multiple corpora: 1,000 items
+  from each of the three ChaosNLI sets (MNLI-matched, SNLI, alphaNLI) with a presentation-order
+  arm, and a score-only release for a 1,000-item Civil Comments toxicity sample. Released with
+  per-dataset manifests, per-file hashes, the pinned judge roster of each collection round, and
+  offline analysis code that makes no model or API calls. Source corpora are not redistributed.
+type: dataset
+version: "2.0"
+date-released: "2026-09-19"
+license: CC-BY-4.0
+repository-code: "https://github.com/Chao1208/32judges-votes"
+url: "https://github.com/Chao1208/32judges-votes"
+authors:
+  - family-names: Li
+    given-names: Chao
+  - family-names: Yu
+    given-names: Yingying
+  - family-names: Li
+    given-names: Yunfeng
+keywords:
+  - LLM-as-a-judge
+  - evaluation panels
+  - correlated errors
+  - human label distributions
+  - annotation disagreement
+  - natural language inference
+  - toxicity classification
+identifiers:
+  - type: url
+    value: "https://github.com/Chao1208/32judges-votes/releases/tag/v1.0-paper"
+    description: >-
+      The frozen layout cited by the paper; the repository was previously named
+      chaosnli-judge-votes and old URLs redirect.
+references:
+  - type: article
+    title: >-
+      How Many Humans Is a Judge Panel Worth? Anchoring Effective Panel Size on Human Label
+      Distributions, and What the Shared Error Is Made Of
+    year: 2026
+    notes: "Preprint; this dataset is the paper's data release."
+    authors:
+      - family-names: Li
+        given-names: Chao
+      - family-names: Yu
+        given-names: Yingying
+      - family-names: Li
+        given-names: Yunfeng
+  - type: conference-paper
+    title: "What Can We Learn from Collective Human Opinions on Natural Language Inference Data?"
+    year: 2020
+    collection-title: "Proceedings of EMNLP 2020"
+    notes: "ChaosNLI supplies the items and human label distributions; not redistributed here."
+    authors:
+      - family-names: Nie
+        given-names: Yixin
+      - family-names: Zhou
+        given-names: Xiang
+      - family-names: Bansal
+        given-names: Mohit

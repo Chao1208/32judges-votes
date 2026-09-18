@@ -1,0 +1,75 @@
+{
+ "schema": "schema/dataset.manifest.schema.json",
+ "dataset_id": "civil-comments-1000",
+ "family": "civil-comments",
+ "title": "Civil Comments 1,000-item toxicity sample — 32 judges, score-only release",
+ "legacy_key": null,
+ "task": {
+  "type": "binary-toxicity",
+  "labels": [
+   "NON-TOXIC",
+   "TOXIC"
+  ]
+ },
+ "n_items": 1000,
+ "release_tier": "score_only",
+ "panel": {
+  "file": "panel/panel-civil-comments-1000.json",
+  "k": 32
+ },
+ "human_reference": {
+  "source": "Civil Comments (Jigsaw), CC0",
+  "redistributed": false,
+  "join_key": "id_sha256 (irreversible)",
+  "annotators_per_item": "50-2196 real annotators, carried in the file",
+  "how_to_join": "not needed: fractions and counts ship inside scores.json"
+ },
+ "arms": {
+  "baseline": {
+   "path": "datasets/civil-comments-1000/votes/baseline",
+   "record_fields": [
+    "id_sha256",
+    "stratum",
+    "toxicity",
+    "n_annotators",
+    "n_toxic",
+    "judge_labels",
+    "judge_status"
+   ],
+   "n_files": 1,
+   "n_records": 32000,
+   "files": {
+    "scores.json": {
+     "items": 1000,
+     "judges": 32,
+     "bytes": 1074000,
+     "sha256": "040dba5cba20f573e0e86991171dcecfcba4774a2186de93d4d6099f44557b59"
+    }
+   }
+  }
+ },
+ "panel_keys_in_file": {
+  "F15_24": 24,
+  "F15_10": 10,
+  "F15_26": 26,
+  "F15_10p": 10,
+  "F15_28": 28,
+  "F15_32": 32
+ },
+ "paper_panel_key": "F15_32",
+ "excludes": "评论原文、模型原始回复与推理段、worker 号、整数 id、凭据、provider 载荷、尝试台账",
+ "provenance": {
+  "sha256": "040dba5cba20f573e0e86991171dcecfcba4774a2186de93d4d6099f44557b59",
+  "bytes": 1074000,
+  "source_manifest_sha256": {
+   "final_ids": "4b4f60d725f638d2dd560dbadf22214e38ed999dbee0933f124392d98387f294",
+   "final_with_fractions": "a3d250cb0bb062a687d598f1b3ac748534df3821fbd420c5759ce6cda97f4e54",
+   "reserve_ids": "5328b803d0a6fe67b8cbfc984f2568bd6d6aec47f413e386200609e898531834"
+  },
+  "panel_frozen_sha256": "571aaba998ccce9ab047d26683d9f1347c8ddcb952077ea8a162b70353591dfc"
+ },
+ "license": {
+  "votes": "CC BY 4.0",
+  "human_reference": "CC0 (source corpus, not redistributed here)"
+ }
+}

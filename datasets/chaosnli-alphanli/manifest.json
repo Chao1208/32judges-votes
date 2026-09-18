@@ -1,0 +1,577 @@
+{
+ "schema": "schema/dataset.manifest.schema.json",
+ "dataset_id": "chaosnli-alphanli",
+ "family": "chaosnli",
+ "title": "ChaosNLI alphaNLI — 32 judges, baseline and presentation-order arms",
+ "legacy_key": "alphanli",
+ "task": {
+  "type": "abductive-2way",
+  "labels": [
+   "1",
+   "2"
+  ],
+  "label_meaning": {
+   "1": "hypothesis 1",
+   "2": "hypothesis 2"
+  }
+ },
+ "n_items": 1000,
+ "panel": {
+  "file": "panel/panel-chaosnli.json",
+  "k": 32
+ },
+ "human_reference": {
+  "source": "ChaosNLI",
+  "redistributed": false,
+  "join_key": "uid",
+  "annotators_per_item": 100,
+  "how_to_join": "scripts/join_chaosnli.py"
+ },
+ "items": {
+  "path": "datasets/chaosnli-alphanli/items/uids.txt",
+  "n": 1000,
+  "sha256": "cfa28df6ea227836432022caa8f58a02cb4a83fa11e7f12971ce182411b3337e",
+  "order": "sampling order"
+ },
+ "arms": {
+  "baseline": {
+   "path": "datasets/chaosnli-alphanli/votes/baseline",
+   "record_fields": [
+    "uid",
+    "label",
+    "parse_fail"
+   ],
+   "n_files": 32,
+   "n_records": 32000,
+   "parse_fail_cells": 5,
+   "files": {
+    "doubao18": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "d2c0162558b3328c3c9770fa4e01735a7ef322adc0ce7f88da1bed2c12b97e17"
+    },
+    "doubao20pro": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "837798810f42ed6ce523a8708f7e9431b4a746df4bf16a44678701d593cc5050"
+    },
+    "dsv32": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "209fa162786a20fa4049c9b02bbec18b654aa772d2ff1a480402e8a7dba0d7d5"
+    },
+    "dsv4flash": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "80a4cc91614900fba24f8ef1661eacbac297f79b599480d3e9c3be508f483098"
+    },
+    "dsv4pro": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "c1883ca275b948075cc8872f4d0aa9640423dc6e07bd41e13060c6c8d8c5319b"
+    },
+    "gem25pro": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "834691b976a87e9d13980a09d7c779e5b8f4da646e7286d9328f69317155b32b"
+    },
+    "gem31pro": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "0953368e3b83dfbbdb7b3f3c9f4d7670df881604e9cc863390368b86f3110ea6"
+    },
+    "gem36flash": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "bf1d2552deb55920dd4f20cae4d0ac1b83b3bf2d47c1fbfa95b9b9094e62eda8"
+    },
+    "gem37flash": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "60657c1f1cf06b3040741dd997e7ea301abc4fffad0f7a40415d4060209525a6"
+    },
+    "glm5": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "c73424687ca89a845d5d9b33ef5f6c528cabb470d8708f7febc9b308408a6b9b"
+    },
+    "glm51": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "45bdb04298bb4aa8975703ec4f1e48e27ed236a161ef8d97c2d8e9a451ff55c5"
+    },
+    "glm52": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "4ec3e3e8c4d9d8ca543fd2ad640ba485370e7a18f7d096aa53402e0393c1f885"
+    },
+    "glm53": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "6da582b829b92a278d0cf610a5d65fc41508c861bf6bcd8911f2ef5d57dc35e1"
+    },
+    "gpt41": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "16bd6dffb2d7822e5280ce794a1b097ea99e9809f81e905b290022a4092a597e"
+    },
+    "gpt54": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "36b8e2df3e32c99c808f91311bf82d7ffead67ee1aa9110f4ef0cfe0d88a8d2b"
+    },
+    "gpt56sol": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "91fd2647ecb00d8217ffb35a18027c1cbbde77cfa6ea0f9cd48910aab67c912e"
+    },
+    "gpt56terra": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "16cab98dec3e536d0b77c8ecac1335a5c139b69c05c99cfa47bd3b8662270920"
+    },
+    "grok45": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "1c39e8d35b16efef637e7d35d0ea291ccc0b90bec5eb9d19f32581d52db6540e"
+    },
+    "grok46": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "e8c686f5cfba02c61f580104e4f69906293fd69b6ebccd512053d03e0849962f"
+    },
+    "haiku45": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 2,
+     "sha256": "3edd6758fd69b805ccafe55b9ada2ee9f843219bf8f7376755fcdc65261754bc"
+    },
+    "kimik25": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "d74092dfef41f8ee7623f147177e3084f309d92009b4058443dbc79b71e63dc8"
+    },
+    "kimik26": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "fa4fe501085d5c63983ab61147486f9771cce30a5c5976341161674567b6e0bd"
+    },
+    "kimik27code": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "5af97786d3a1655274aeba4e14f3be583a89b1e7355e6306602a5556c318de09"
+    },
+    "kimik3": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "29c60da774b6e1302728d9ddbc1913b36118fdef5afe168913f0977765fd8c5d"
+    },
+    "minimaxm3": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "3983f96ab37e46891a4e698bfdef76d5f7bd3cc0674174519373c2daa5c2fe9c"
+    },
+    "o4mini": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "35f7e3424417a4991b36ed767ebd7d7f341f16f82a2c0837991838942f606680"
+    },
+    "opus5": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "cd77b58dd86c6724963158de901797e270bf8ee5b76f048ab9bacefd49c56d94"
+    },
+    "qwen35plus": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "ee13b7bdfb5addc16beb32265bed85561fa404094a7cba5ce56d3835b44d6e97"
+    },
+    "qwen37plus": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "9e2753762a660e5ec88df8626d86eb9f43dc4c0cb63eb540c0b0869413ef11df"
+    },
+    "qwen38max": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 0,
+     "sha256": "598e9f678db5ae801e6590e31e28550e686b1e00dd576f1101ae2ff46d159e3d"
+    },
+    "qwen3max": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 2,
+     "sha256": "61a966de697c77be0c70c1d6f3b2bdcd3447aa9548828dfdbbe107620848754c"
+    },
+    "sonnet46": {
+     "rows": 1000,
+     "uids": 1000,
+     "parse_fail": 1,
+     "sha256": "759acc52840c37f10a1cb7d80fccf1ca60e8b579244bb838615b7154ab1e4371"
+    }
+   }
+  },
+  "swap": {
+   "path": "datasets/chaosnli-alphanli/votes/swap",
+   "record_fields": [
+    "uid",
+    "variant",
+    "perm",
+    "label",
+    "parse_fail"
+   ],
+   "n_files": 31,
+   "n_records": 30474,
+   "parse_fail_cells": 8,
+   "files": {
+    "doubao18": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "14add5645c0d8f8b046d183b75d974fa73869f146fe364cad3c0f97c34ae8520",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "doubao20pro": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "40db5773881f4fb744d193a657ae2fd5b1d1b629dc2eade35846eeb7e2d3fb1e",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "dsv4flash": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "ab4a12d1d5e77ff5bb376683a37826d7efd10e4b4f36e4980de8f06d1227123b",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "dsv4pro": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "30718a52f47904843e5f01c555fc02f793216b5aa892bd9561da8a0c311c6b88",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gem25pro": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "cdebf6ce7d83dcfd8fab83043fa08cf2a966287eb0204e374a87f31f2cd02253",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gem31pro": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "04b08564ee7728bc5f33b556afd3271cecf40385ad501bf48d739d3e0cdb1417",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gem36flash": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "66f190845e7a0bfe60c1e177c9eebda068891018c42d26f48e3fde1b6623c6ea",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gem37flash": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "07ea0954e72df02781ebcdfdc7d3cd14d0b3498220d9e1b99df196eac18d9612",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "glm5": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "72532a1e91da38367bf6c94989c502a85b147748d636e8bd8bbb11a15be69aeb",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "glm51": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "4452eb72268390a7348070ee53b484fcc2660a4029a182b4dc0990438150cf50",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "glm52": {
+     "rows": 500,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "7518565ee9f42ca8bfac3a7e6d2c432a9aac0068a594ba4bf8d620056f4757c8",
+     "rows_per_variant": {
+      "0": 500
+     }
+    },
+    "glm53": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "10f60c9527b35b8e64b8bba2b9ff135e9dbb388578f442be0e1f7c897b600168",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gpt41": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "050abd3fb839e8bd2786a095fd63cbc82ff0c9ade8fec5d610249a80c032f8e4",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gpt54": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "0858e8981b6ebffc040902266c38ce972ff2fbf04484d409de7a93e442678c29",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gpt56sol": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "db93b9e76daa9a0bbedf044c1a5153347cdfd9de247d721ee246c24fd930dee3",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "gpt56terra": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "68d15e4a1a32f065e46702f09e9579326e5b436bf3b06421b181e1378ceefc57",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "grok45": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "76233c32d075bf51b99fe5c33cb79d632d19b98d14a648898f17154577c31d16",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "grok46": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "a1851fafa303377844c8810cc835dd024434b6d59b5a67b2f68c8d6c9a5e3d28",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "haiku45": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "e4b749f98e2a85543416cc2face3741f13c391d0bb6c13cdcfbf5b5494b8056b",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "kimik25": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "ff81bf60aa0b144fef7c4d5b07e5450aa28f79a0ce4f2197875577697ac1bbc3",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "kimik26": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "f255e2bbf3a9828b0ac88f6f8de1a1a521fdd07c52ff85c889c28b1ac2d790f6",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "kimik27code": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "d0c398bd58529b18d79d5d2ede2b3ac8d75bb66e9d860874a5b8fa8134090e7b",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "kimik3": {
+     "rows": 974,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "97a5af28068589718addd9fea11d2f2efda10a07e451c8aa7a96e7c0d6071d06",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 474
+     }
+    },
+    "minimaxm3": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 6,
+     "sha256": "53cc34665a3d671e6f599af80e827c639f1862cd948e27aa9d845a1e5b7df7cf",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "o4mini": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "e082b68711550fd67ec2c1dbf72c1bf9e3150d83a01355fef68486ba00edf862",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "opus5": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "872a8ee1280cc5f3bac46881b3b165257f68c86fa1ccc47c263ba5464a3ef0c7",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "qwen35plus": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "859753ce9586451394cc9155e1e79c2c0a1385bd6cf4e413e3a4fd6bb57dafd2",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "qwen37plus": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "d7719cc7cf3a189e414c11c8ef9ec7145e0d5701ce707c111b348ba713d5e27a",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "qwen38max": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "ca19b480e759d3c14b7bca71c779ee73bf8ca34e0a059c337d67464c96b9465d",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "qwen3max": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 2,
+     "sha256": "8faaadd105a988c6f4ef4ebf05cee662a6c09a91c5d2c66cfb501a75ccd1efcc",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    },
+    "sonnet46": {
+     "rows": 1000,
+     "uids": 500,
+     "parse_fail": 0,
+     "sha256": "42d41575761e752ae0c237371dc6723cf35dea85f2d26eb0a3243d73bc262852",
+     "rows_per_variant": {
+      "0": 500,
+      "1": 500
+     }
+    }
+   },
+   "panel_excluded_from_arm_analysis": {
+    "dsv32": "channel died; no presentation-order file at all",
+    "glm52": "dropped from the baseline panel for this dataset; variant 1 never collected",
+    "kimik3": "channel died mid-collection; variant 1 is missing 26 cells and cannot be re-collected — keeping it would silently shrink the uid intersection by 26 items"
+   }
+  }
+ },
+ "license": {
+  "votes": "CC BY 4.0",
+  "items": "CC BY 4.0",
+  "human_reference": "CC BY-NC 4.0 (ChaosNLI, not redistributed here)"
+ }
+}

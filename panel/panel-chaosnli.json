@@ -1,0 +1,217 @@
+{
+ "panel_id": "chaosnli-2026-09",
+ "k": 32,
+ "used_by": [
+  "chaosnli-mnli-m",
+  "chaosnli-snli",
+  "chaosnli-alphanli"
+ ],
+ "what": "The 32-judge roster for the ChaosNLI collection round. judge_key is the join key used in every vote file; model_id is the exact requested model string.",
+ "caveat": "Backend identity/version is not independently authenticated, and `earlier_generation` is retained as recorded metadata, not as evidence of backend chronology or capability.",
+ "families": {
+  "alibaba": 4,
+  "anthropic": 3,
+  "bytedance": 2,
+  "deepseek": 3,
+  "google": 4,
+  "minimax": 1,
+  "moonshot": 4,
+  "openai": 5,
+  "xai": 2,
+  "zhipu": 4
+ },
+ "judges": [
+  {
+   "judge_key": "qwen35plus",
+   "model_id": "qwen3.5-plus",
+   "family": "alibaba",
+   "earlier_generation": true
+  },
+  {
+   "judge_key": "qwen37plus",
+   "model_id": "qwen3.7-plus",
+   "family": "alibaba",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "qwen38max",
+   "model_id": "qwen3.8-max",
+   "family": "alibaba",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "qwen3max",
+   "model_id": "qwen3-max",
+   "family": "alibaba",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "haiku45",
+   "model_id": "claude-haiku-4-5-20251001",
+   "family": "anthropic",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "opus5",
+   "model_id": "claude-opus-5",
+   "family": "anthropic",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "sonnet46",
+   "model_id": "claude-sonnet-4-6",
+   "family": "anthropic",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "doubao18",
+   "model_id": "doubao-seed-1-8-251228",
+   "family": "bytedance",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "doubao20pro",
+   "model_id": "doubao-seed-2-0-pro-260215",
+   "family": "bytedance",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "dsv32",
+   "model_id": "deepseek-v3.2",
+   "family": "deepseek",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "dsv4flash",
+   "model_id": "DeepSeek-V4-Flash",
+   "family": "deepseek",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "dsv4pro",
+   "model_id": "DeepSeek-V4-Pro",
+   "family": "deepseek",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gem25pro",
+   "model_id": "gemini-2.5-pro",
+   "family": "google",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gem31pro",
+   "model_id": "gemini-3.1-pro-preview",
+   "family": "google",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gem36flash",
+   "model_id": "gemini-3.6-flash",
+   "family": "google",
+   "earlier_generation": true
+  },
+  {
+   "judge_key": "gem37flash",
+   "model_id": "Gemini 3.7 Flash",
+   "family": "google",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "minimaxm3",
+   "model_id": "MiniMax-M3",
+   "family": "minimax",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "kimik25",
+   "model_id": "kimi-k2.5",
+   "family": "moonshot",
+   "earlier_generation": true
+  },
+  {
+   "judge_key": "kimik26",
+   "model_id": "kimi-k2.6",
+   "family": "moonshot",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "kimik27code",
+   "model_id": "Kimi-K2.7-Code",
+   "family": "moonshot",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "kimik3",
+   "model_id": "Kimi K3",
+   "family": "moonshot",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gpt41",
+   "model_id": "gpt-4.1",
+   "family": "openai",
+   "earlier_generation": true
+  },
+  {
+   "judge_key": "gpt54",
+   "model_id": "gpt-5.4",
+   "family": "openai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gpt56sol",
+   "model_id": "gpt-5.6-sol",
+   "family": "openai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "gpt56terra",
+   "model_id": "gpt-5.6-terra",
+   "family": "openai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "o4mini",
+   "model_id": "o4-mini",
+   "family": "openai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "grok45",
+   "model_id": "Grok-4.5",
+   "family": "xai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "grok46",
+   "model_id": "Grok-4.6",
+   "family": "xai",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "glm5",
+   "model_id": "glm-5",
+   "family": "zhipu",
+   "earlier_generation": true
+  },
+  {
+   "judge_key": "glm51",
+   "model_id": "glm-5.1",
+   "family": "zhipu",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "glm52",
+   "model_id": "GLM-5.2",
+   "family": "zhipu",
+   "earlier_generation": false
+  },
+  {
+   "judge_key": "glm53",
+   "model_id": "glm-5.3",
+   "family": "zhipu",
+   "earlier_generation": false
+  }
+ ]
+}

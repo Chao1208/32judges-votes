@@ -1,12 +1,14 @@
 """Contract and analytic tests; no model calls or upstream data required."""
 import csv
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
 import numpy as np
 
+from src import layout
 from src.formulas import contrast_basis, panel_metrics, residual_gram, solve_human_equivalent
 from src.votes_io import fingerprint, load_panel, load_saved_calibration, sha256
 
@@ -79,13 +81,15 @@ class AnalyticalTests(unittest.TestCase):
 
 
 class InputContractTests(unittest.TestCase):
+    VOTES = "datasets/chaosnli-mnli-m/votes/baseline"
+
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
-        for name in ("items", "votes/mnli_m", "meta/analysis"):
+        for name in ("datasets/chaosnli-mnli-m/items", self.VOTES, "meta/analysis"):
             (self.root / name).mkdir(parents=True)
-        (self.root / "items/mnli_m_uids.txt").write_text("u3\nu1\nu2\n")
+        (self.root / "datasets/chaosnli-mnli-m/items/uids.txt").write_text("u3\nu1\nu2\n")
         (self.root / "meta/judges.csv").write_text("judge_key\na\nb\n")
         self.human_path = self.root / "human.jsonl"
         self.human_rows = [{"uid": "u1", "label_counter": {"e": 50, "n": 50}, "majority_label": "n"},
@@ -95,7 +99,7 @@ class InputContractTests(unittest.TestCase):
         self.vote_rows = [{"uid": u, "label": label, "parse_fail": failed}
                           for u, label, failed in [("u1", "e", False), ("u2", "n", True), ("u3", "c", False)]]
         for judge in ["a", "b"]:
-            self.write(self.root / f"votes/mnli_m/{judge}.jsonl", self.vote_rows)
+            self.write(self.root / f"{self.VOTES}/{judge}.jsonl", self.vote_rows)
 
     @staticmethod
     def write(path, records):
@@ -114,7 +118,7 @@ class InputContractTests(unittest.TestCase):
         self.assertEqual(retained.provenance["dropped_items"], 0)
 
     def test_votes_never_silently_intersect_or_overwrite(self):
-        path = self.root / "votes/mnli_m/a.jsonl"
+        path = self.root / f"{self.VOTES}/a.jsonl"
         for records in (self.vote_rows[:-1], self.vote_rows + [self.vote_rows[0]],
                         self.vote_rows + [{"uid": "other", "label": "e", "parse_fail": False}]):
             self.write(path, records)
@@ -122,7 +126,7 @@ class InputContractTests(unittest.TestCase):
                 self.load()
 
     def test_rejects_invalid_labels_and_presentation_data(self):
-        path = self.root / "votes/mnli_m/a.jsonl"
+        path = self.root / f"{self.VOTES}/a.jsonl"
         for patch in ({"label": "x"}, {"parse_fail": "false"}, {"variant": 0}):
             records = [dict(row) for row in self.vote_rows]
             records[0].update(patch)
@@ -140,6 +144,25 @@ class InputContractTests(unittest.TestCase):
             self.write(self.human_path, records)
             with self.assertRaises(ValueError):
                 self.load()
+
+    def test_v1_layout_still_loads(self):
+        """A v1.0-shaped checkout (or the link shim) must keep working: same panel, same hashes."""
+        old = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, old, True)
+        (old / "items").mkdir()
+        (old / "votes/mnli_m").mkdir(parents=True)
+        (old / "meta").mkdir()
+        (old / "items/mnli_m_uids.txt").write_text("u3\nu1\nu2\n")
+        (old / "meta/judges.csv").write_text("judge_key\na\nb\n")
+        for judge in ("a", "b"):
+            self.write(old / f"votes/mnli_m/{judge}.jsonl", self.vote_rows)
+        v1 = load_panel(old, "mnli_m", self.human_path, "paper-retained")
+        v2 = self.load("paper-retained")
+        self.assertEqual(v1.uids, v2.uids)
+        self.assertEqual(v1.provenance["roster_sha256"], v2.provenance["roster_sha256"])
+        self.assertEqual(layout.dataset_id("mnli_m"), "chaosnli-mnli-m")
+        self.assertEqual(layout.legacy_key("chaosnli-mnli-m"), "mnli_m")
+        self.assertIsNone(layout.legacy_key("civil-comments-1000"))
 
     def test_saved_curve_requires_same_items_and_counts(self):
         panel = self.load("paper-retained")

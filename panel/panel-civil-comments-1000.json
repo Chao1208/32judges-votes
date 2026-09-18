@@ -1,0 +1,209 @@
+{
+ "panel_id": "civil-comments-2026-09",
+ "k": 32,
+ "used_by": [
+  "civil-comments-1000"
+ ],
+ "panel_key_in_scores_file": "F15_32",
+ "what": "The 32-judge roster for the Civil Comments collection round. Same panel size as the ChaosNLI round by design; the roster is not identical.",
+ "differs_from_chaosnli_round": {
+  "only_in_chaosnli_round": [
+   "dsv32",
+   "gem25pro",
+   "gem31pro",
+   "gem36flash",
+   "kimik3",
+   "o4mini"
+  ],
+  "only_in_civil_comments_round": [
+   "dsv41flash",
+   "glm53flash",
+   "gpt55b",
+   "gpt6astra",
+   "o3",
+   "sonnet5"
+  ],
+  "family_delta": {
+   "anthropic": 1,
+   "google": -3,
+   "moonshot": -1,
+   "openai": 2,
+   "zhipu": 1
+  },
+  "why": "Provider model aliases drifted between the two rounds: five endpoints had disappeared (404 / no channel) and three Google models were unavailable on both routes. Replacements were taken from a candidate order fixed before probing. Panel size is aligned; family composition is not."
+ },
+ "families": {
+  "alibaba": 4,
+  "anthropic": 4,
+  "bytedance": 2,
+  "deepseek": 3,
+  "google": 1,
+  "minimax": 1,
+  "moonshot": 3,
+  "openai": 7,
+  "xai": 2,
+  "zhipu": 5
+ },
+ "judges": [
+  {
+   "judge_key": "qwen35plus",
+   "model_id": "qwen3.5-plus",
+   "family": "alibaba"
+  },
+  {
+   "judge_key": "qwen37plus",
+   "model_id": "qwen3.7-plus",
+   "family": "alibaba"
+  },
+  {
+   "judge_key": "qwen38max",
+   "model_id": "qwen3.8-max",
+   "family": "alibaba"
+  },
+  {
+   "judge_key": "qwen3max",
+   "model_id": "qwen3-max",
+   "family": "alibaba"
+  },
+  {
+   "judge_key": "haiku45",
+   "model_id": "claude-haiku-4-5-20251001",
+   "family": "anthropic"
+  },
+  {
+   "judge_key": "opus5",
+   "model_id": "claude-opus-5",
+   "family": "anthropic"
+  },
+  {
+   "judge_key": "sonnet46",
+   "model_id": "claude-sonnet-4-6",
+   "family": "anthropic"
+  },
+  {
+   "judge_key": "sonnet5",
+   "model_id": "claude-sonnet-5",
+   "family": "anthropic"
+  },
+  {
+   "judge_key": "doubao18",
+   "model_id": "doubao-seed-1-8-251228",
+   "family": "bytedance"
+  },
+  {
+   "judge_key": "doubao20pro",
+   "model_id": "doubao-seed-2-0-pro-260215",
+   "family": "bytedance"
+  },
+  {
+   "judge_key": "dsv41flash",
+   "model_id": "deepseek-v4.1-flash",
+   "family": "deepseek"
+  },
+  {
+   "judge_key": "dsv4flash",
+   "model_id": "DeepSeek-V4-Flash",
+   "family": "deepseek"
+  },
+  {
+   "judge_key": "dsv4pro",
+   "model_id": "DeepSeek-V4-Pro",
+   "family": "deepseek"
+  },
+  {
+   "judge_key": "gem37flash",
+   "model_id": "Gemini 3.7 Flash",
+   "family": "google"
+  },
+  {
+   "judge_key": "minimaxm3",
+   "model_id": "MiniMax-M3",
+   "family": "minimax"
+  },
+  {
+   "judge_key": "kimik25",
+   "model_id": "kimi-k2.5",
+   "family": "moonshot"
+  },
+  {
+   "judge_key": "kimik26",
+   "model_id": "kimi-k2.6",
+   "family": "moonshot"
+  },
+  {
+   "judge_key": "kimik27code",
+   "model_id": "Kimi-K2.7-Code",
+   "family": "moonshot"
+  },
+  {
+   "judge_key": "gpt41",
+   "model_id": "gpt-4.1",
+   "family": "openai"
+  },
+  {
+   "judge_key": "gpt54",
+   "model_id": "gpt-5.4",
+   "family": "openai"
+  },
+  {
+   "judge_key": "gpt55b",
+   "model_id": "gpt-5.5",
+   "family": "openai"
+  },
+  {
+   "judge_key": "gpt56sol",
+   "model_id": "gpt-5.6-sol",
+   "family": "openai"
+  },
+  {
+   "judge_key": "gpt56terra",
+   "model_id": "gpt-5.6-terra",
+   "family": "openai"
+  },
+  {
+   "judge_key": "gpt6astra",
+   "model_id": "gpt-6-astra",
+   "family": "openai"
+  },
+  {
+   "judge_key": "o3",
+   "model_id": "o3",
+   "family": "openai"
+  },
+  {
+   "judge_key": "grok45",
+   "model_id": "Grok-4.5",
+   "family": "xai"
+  },
+  {
+   "judge_key": "grok46",
+   "model_id": "Grok-4.6",
+   "family": "xai"
+  },
+  {
+   "judge_key": "glm5",
+   "model_id": "glm-5",
+   "family": "zhipu"
+  },
+  {
+   "judge_key": "glm51",
+   "model_id": "glm-5.1",
+   "family": "zhipu"
+  },
+  {
+   "judge_key": "glm52",
+   "model_id": "GLM-5.2",
+   "family": "zhipu"
+  },
+  {
+   "judge_key": "glm53",
+   "model_id": "glm-5.3",
+   "family": "zhipu"
+  },
+  {
+   "judge_key": "glm53flash",
+   "model_id": "GLM-5.3-Flash",
+   "family": "zhipu"
+  }
+ ]
+}

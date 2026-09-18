@@ -1,14 +1,20 @@
-# Civil Comments score-only release
+# Moved: `civil_comments/` → `datasets/civil-comments-1000/`
 
-This directory contains the public score layer for the Civil Comments external validation in *How Many Humans Is a Judge Panel Worth?*
+The Civil Comments score-only release now lives with every other dataset, one directory per
+dataset:
 
-`f15_public_scores.json` contains 1,000 sampled Civil Comments items with:
+| what | where |
+|---|---|
+| final judge labels, human toxicity fractions and annotator counts | [`datasets/civil-comments-1000/votes/baseline/scores.json`](../datasets/civil-comments-1000/votes/baseline/scores.json) |
+| dataset manifest (counts, panel, hashes) | [`datasets/civil-comments-1000/manifest.json`](../datasets/civil-comments-1000/manifest.json) |
+| released hash record, as published at v1.0 | [`datasets/civil-comments-1000/manifest-source.json`](../datasets/civil-comments-1000/manifest-source.json) |
+| what the release does and does not contain | [`datasets/civil-comments-1000/README.md`](../datasets/civil-comments-1000/README.md) |
+| the 32-judge roster for this round | [`panel/panel-civil-comments-1000.json`](../panel/panel-civil-comments-1000.json) |
 
-- a SHA-256 identifier instead of the source comment ID;
-- the human toxicity fraction and annotator count used as the empirical reference;
-- the final labels from six frozen panels (including the 32-judge panel, the principal panel reported in EN0.3CH0.4);
-- non-`ok` status fields where applicable.
+The file contents are unchanged — `scores.json` has the same sha256 (`040dba5c…`) as
+`f15_public_scores.json` did at v1.0. The paper reports the panel stored under the key
+`F15_32`; the other panel keys in the same file are supporting records.
 
-The release contains no comment text, raw model responses, reasoning traces, worker identifiers, integer source IDs, provider payloads, API credentials, or request ledger. The source archive and item text are not redistributed. `f15_public_manifest.json` records the score-file hash and the public-release provenance hashes.
-
-The score layer is sufficient to audit the released Civil Comments aggregate calculations when combined with the paper's protocol and analysis code. The paper reports only the 32-judge panel as its principal Civil Comments result; the other frozen panels remain in the release as supporting records. It is not a release of the source Civil Comments corpus or the raw collection record.
+This directory is kept because the paper deep-links to it. See
+[`COMPATIBILITY.md`](../COMPATIBILITY.md) for the full old-path → new-path map, or check out the
+`v1.0-paper` tag to get the exact tree the paper describes.

@@ -14,6 +14,11 @@ from pathlib import Path
 
 import numpy as np
 
+try:                                    # importable as a package or as a loose directory
+    from . import layout as _layout
+except ImportError:                     # pragma: no cover - script-style import
+    import layout as _layout
+
 LABELS = {"mnli_m": ("e", "n", "c"), "snli": ("e", "n", "c"), "alphanli": ("1", "2")}
 
 
@@ -102,15 +107,15 @@ def load_panel(repo_root, dataset, human_path, failure_policy="drop-items", gold
         raise ValueError("unsupported dataset or failure policy")
     root, human_path = Path(repo_root), Path(human_path)
     labels = LABELS[dataset]
-    roster_path = root / "items" / f"{dataset}_uids.txt"
+    roster_path = _layout.items_file(root, dataset)
     uids = roster_path.read_text(encoding="utf-8").split()
     if not uids or len(uids) != len(set(uids)):
         raise ValueError("item roster must be nonempty and have unique UIDs")
-    with (root / "meta" / "judges.csv").open(newline="", encoding="utf-8") as handle:
+    with _layout.judges_csv(root).open(newline="", encoding="utf-8") as handle:
         metadata_judges = [row["judge_key"] for row in csv.DictReader(handle)]
     if len(metadata_judges) != len(set(metadata_judges)):
         raise ValueError("duplicate judge key in metadata")
-    files = sorted((root / "votes" / dataset).glob("*.jsonl"))
+    files = sorted(_layout.votes_dir(root, dataset, "baseline").glob("*.jsonl"))
     judges = [path.stem for path in files]
     if len(judges) < 2 or set(judges) != set(metadata_judges):
         raise ValueError("baseline vote files must exactly match the judge metadata roster")
@@ -118,7 +123,7 @@ def load_panel(repo_root, dataset, human_path, failure_policy="drop-items", gold
     idx = np.empty((len(judges), len(uids)), dtype=int)
     failed = np.zeros_like(idx, dtype=bool)
     input_hashes = {roster_path.relative_to(root).as_posix(): sha256(roster_path),
-                    "meta/judges.csv": sha256(root / "meta" / "judges.csv")}
+                    "meta/judges.csv": sha256(_layout.judges_csv(root))}
     for judge_number, path in enumerate(files):
         seen = set()
         for row in rows(path):

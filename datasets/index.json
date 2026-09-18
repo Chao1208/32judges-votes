@@ -1,0 +1,78 @@
+{
+ "schema": "schema/index.schema.json",
+ "repository": "32judges-votes",
+ "what": "Per-item votes from a fixed 32-judge LLM panel, one directory per dataset.",
+ "panel_invariant": "Every dataset in this repository is judged by 32 judges. The roster of a given collection round is pinned in panel/.",
+ "panel_files": [
+  "panel/panel-chaosnli.json",
+  "panel/panel-civil-comments-1000.json",
+  "meta/judges.csv"
+ ],
+ "datasets": [
+  {
+   "dataset_id": "chaosnli-mnli-m",
+   "family": "chaosnli",
+   "title": "ChaosNLI MNLI-matched — 32 judges, baseline and presentation-order arms",
+   "task_type": "nli-3way",
+   "n_items": 1000,
+   "panel_k": 32,
+   "arms": [
+    "baseline",
+    "swap"
+   ],
+   "release_tier": "per_item_votes",
+   "legacy_key": "mnli_m",
+   "manifest": "datasets/chaosnli-mnli-m/manifest.json",
+   "manifest_sha256": "87d1ef02410f39b6986f635f38e50c65f9117c3c91d1d05b81d40150cf5b0e07"
+  },
+  {
+   "dataset_id": "chaosnli-snli",
+   "family": "chaosnli",
+   "title": "ChaosNLI SNLI — 32 judges, baseline and presentation-order arms",
+   "task_type": "nli-3way",
+   "n_items": 1000,
+   "panel_k": 32,
+   "arms": [
+    "baseline",
+    "swap"
+   ],
+   "release_tier": "per_item_votes",
+   "legacy_key": "snli",
+   "manifest": "datasets/chaosnli-snli/manifest.json",
+   "manifest_sha256": "4be8f65630caa2db1608e2b1045c10b8be5ff37b276a20299b0908e13ec01a16"
+  },
+  {
+   "dataset_id": "chaosnli-alphanli",
+   "family": "chaosnli",
+   "title": "ChaosNLI alphaNLI — 32 judges, baseline and presentation-order arms",
+   "task_type": "abductive-2way",
+   "n_items": 1000,
+   "panel_k": 32,
+   "arms": [
+    "baseline",
+    "swap"
+   ],
+   "release_tier": "per_item_votes",
+   "legacy_key": "alphanli",
+   "manifest": "datasets/chaosnli-alphanli/manifest.json",
+   "manifest_sha256": "e7f8ef16a0a679236d25acca378755b9887e17eeac03ab7fb883c439ecff72d2"
+  },
+  {
+   "dataset_id": "civil-comments-1000",
+   "family": "civil-comments",
+   "title": "Civil Comments 1,000-item toxicity sample — 32 judges, score-only release",
+   "task_type": "binary-toxicity",
+   "n_items": 1000,
+   "panel_k": 32,
+   "arms": [
+    "baseline"
+   ],
+   "release_tier": "score_only",
+   "legacy_key": null,
+   "manifest": "datasets/civil-comments-1000/manifest.json",
+   "manifest_sha256": "e6612b38b81e4882a5e9d5e9303a23b4ed13847ab271d4e050a36ba8af44f016"
+  }
+ ],
+ "generated_by": "scripts/build_manifests.py",
+ "note": "This index records each manifest's own sha256 only. Per-file hashes live in the dataset manifests, so adding a dataset never edits another one."
+}

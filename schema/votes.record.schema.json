@@ -1,0 +1,36 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/Chao1208/32judges-votes/blob/main/schema/votes.record.schema.json",
+ "title": "One released judge vote",
+ "description": "Line format of datasets/<dataset_id>/votes/<arm>/<judge_key>.jsonl. One JSON object per line, no trailing commas, UTF-8. Raw model responses, reasoning traces and prompts are never included.",
+ "oneOf": [
+  {
+   "title": "baseline arm record",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["uid", "label", "parse_fail"],
+   "properties": {
+    "uid": {"type": "string", "description": "Item id in the source dataset; the join key."},
+    "label": {"type": "string", "description": "The judge's final label, from the dataset manifest's task.labels."},
+    "parse_fail": {"type": "boolean", "description": "true = no legal label could be read from the reply, so `label` is a deterministic placeholder hash of uid:judge_key, NOT a judgment. Filter these items out unless you are reproducing the paper's retained-placeholder table."}
+   }
+  },
+  {
+   "title": "presentation-order arm record",
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["uid", "variant", "perm", "label", "parse_fail"],
+   "properties": {
+    "uid": {"type": "string"},
+    "variant": {"type": "integer", "minimum": 0, "description": "0 = the baseline option order. One line per (uid, variant)."},
+    "perm": {"type": "array", "items": {"type": "integer"}, "description": "The option permutation actually presented; the answer is mapped back, so labels are comparable in label semantics to the baseline arm."},
+    "label": {"type": "string"},
+    "parse_fail": {"type": "boolean"}
+   }
+  }
+ ],
+ "x-notes": [
+  "Baseline and presentation variant=0 are separate response snapshots. They must not be silently merged or substituted for one another.",
+  "Score-only datasets (release_tier = score_only) do not use this format; their records live in a single JSON described by the dataset manifest's arms.baseline.record_fields."
+ ]
+}

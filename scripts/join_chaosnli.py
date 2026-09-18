@@ -24,9 +24,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "src"))
+import layout                                                        # noqa: E402
+
 CHAOS_FILE = {"mnli_m": "chaosNLI_mnli_m.jsonl", "snli": "chaosNLI_snli.jsonl",
               "alphanli": "chaosNLI_alphanli.jsonl"}
 
@@ -35,12 +39,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--chaosnli", required=True, type=Path, help="ChaosNLI v1.0 directory")
     ap.add_argument("--dataset", required=True, choices=sorted(CHAOS_FILE))
-    ap.add_argument("--arm", default="votes", choices=["votes", "votes_swap"])
+    ap.add_argument("--arm", default="baseline", choices=["baseline", "swap"])
     ap.add_argument("--variant", type=int, default=None,
                     help="presentation-order arm only: keep just this variant")
     args = ap.parse_args()
 
-    uids = (ROOT / "items" / f"{args.dataset}_uids.txt").read_text().split()
+    uids = layout.items_file(ROOT, args.dataset).read_text().split()
     keep = set(uids)
     human = {}
     with open(args.chaosnli / CHAOS_FILE[args.dataset]) as f:
@@ -53,7 +57,7 @@ def main() -> None:
 
     votes: dict[str, dict[str, str]] = {u: {} for u in uids}
     failed: dict[str, list[str]] = {u: [] for u in uids}
-    for path in sorted((ROOT / args.arm / args.dataset).glob("*.jsonl")):
+    for path in sorted(layout.votes_dir(ROOT, args.dataset, args.arm).glob("*.jsonl")):
         judge = path.stem
         for line in open(path):
             r = json.loads(line)
