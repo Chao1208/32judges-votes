@@ -111,19 +111,19 @@ def load_panel(repo_root, dataset, human_path, failure_policy="drop-items", gold
     uids = roster_path.read_text(encoding="utf-8").split()
     if not uids or len(uids) != len(set(uids)):
         raise ValueError("item roster must be nonempty and have unique UIDs")
-    with _layout.judges_csv(root).open(newline="", encoding="utf-8") as handle:
-        metadata_judges = [row["judge_key"] for row in csv.DictReader(handle)]
+    panel_path = _layout.panel_file(root, dataset)
+    metadata_judges = _layout.panel_judges(root, dataset)
     if len(metadata_judges) != len(set(metadata_judges)):
-        raise ValueError("duplicate judge key in metadata")
+        raise ValueError("duplicate judge key in the panel roster")
     files = sorted(_layout.votes_dir(root, dataset, "baseline").glob("*.jsonl"))
     judges = [path.stem for path in files]
     if len(judges) < 2 or set(judges) != set(metadata_judges):
-        raise ValueError("baseline vote files must exactly match the judge metadata roster")
+        raise ValueError("baseline vote files must exactly match the pinned panel roster")
     uid_index, label_index = {u: i for i, u in enumerate(uids)}, {v: i for i, v in enumerate(labels)}
     idx = np.empty((len(judges), len(uids)), dtype=int)
     failed = np.zeros_like(idx, dtype=bool)
     input_hashes = {roster_path.relative_to(root).as_posix(): sha256(roster_path),
-                    "meta/judges.csv": sha256(_layout.judges_csv(root))}
+                    panel_path.relative_to(root).as_posix(): sha256(panel_path)}
     for judge_number, path in enumerate(files):
         seen = set()
         for row in rows(path):

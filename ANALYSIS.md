@@ -26,8 +26,8 @@ label, including its tie resolution, is preserved; the loader never recomputes
 gold with `argmax`. `old_label` is a different target and is not the default.
 
 When the analysis code is supplied separately from the data repository, add
-`--repo-root path/to/32judges-votes`. This directory must contain `datasets/<dataset_id>/` and `meta/judges.csv`
-(a `v1.0-paper` checkout, with `votes/` and `items/` at the top level, also works); it need not contain the analysis code. Run the
+`--repo-root path/to/32judges-votes`. This directory must contain `datasets/<dataset_id>/` and `panel/`;
+it need not contain the analysis code. Run the
 command from the analysis package directory, or invoke the script by its path.
 
 ## Failure policies and the paper table
@@ -50,7 +50,7 @@ python3 src/verify_paper.py --chaosnli path/to/chaosNLI_v1.0 \
 ```
 
 `verify_paper.py` runs all three datasets with `paper-retained`, compares with
-`meta/analysis/reported_values.json`, and writes each absolute error. Its default
+`reference/reported_values.json`, and writes each absolute error. Its default
 tolerance is `1e-10`. Add `--repo-root` when using a separate data checkout.
 These are the fixed main-table values, not every result in the paper.
 
@@ -76,7 +76,7 @@ does not include all mean bias. Its full one-hot computation equals the
 orthonormal zero-sum contrast calculation. The `n_eff` denominator uses a numerical positivity guard of `1e-14`; smaller values are treated as numerically degenerate. Undefined statistics have JSON `null`
 and a reason, rather than silently replacing undefined correlations with zeros.
 
-`meta/analysis/calibration_curves.csv` is the saved EN0.2CH0.4 derived
+`reference/calibration_curves.csv` is the saved EN0.2CH0.4 derived
 calibration output: sizes 2–12, 16, 24, 32, 48, 64, 96, 128; 12 replicates;
 seed base 42. Only anchor `h` is used here. This release does **not** rerun those
 Monte Carlo draws. The manifest verifies the CSV hash, canonical UID set, and
@@ -142,6 +142,6 @@ public interface. No API configuration or secret is needed.
 Released votes, item rosters and metadata remain under the original `LICENSE` (CC BY 4.0).
 Existing `scripts/` remain under the unchanged `LICENSE-CODE` (MIT).
 New `src/`, `tests/`, and analysis documentation use `src/LICENSE` (MIT).
-Saved derived calibration/reference summaries in `meta/analysis/` are CC BY 4.0.
+Saved derived calibration/reference summaries in `reference/` are CC BY 4.0.
 ChaosNLI task text and human counts are not redistributed and retain the
 upstream CC BY-NC 4.0 terms. Keep joined upstream data out of public bundles.

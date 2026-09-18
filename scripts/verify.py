@@ -8,9 +8,7 @@ For every dataset listed in `datasets/index.json`:
     parse_fail count and (presentation-order arm) rows per variant;
   * no vote record carries a field outside the arm's declared `record_fields`;
   * every uid in a vote file is in that dataset's item roster;
-  * the pinned panel roster in `panel/` matches the judges actually present;
-  * `meta/integrity.json` (the v1.0-shaped compatibility view) agrees with the manifests,
-    so the two can never drift apart silently.
+  * the pinned panel roster in `panel/` matches the judges actually present.
 
     python3 scripts/verify.py              # from the repository root
     python3 scripts/verify.py --dataset chaosnli-snli
@@ -121,36 +119,6 @@ def verify_dataset(entry: dict, bad: list) -> int:
     return n
 
 
-def verify_derived_integrity(bad: list) -> None:
-    """meta/integrity.json is generated from the manifests; prove it still agrees with them."""
-    path = ROOT / "meta" / "integrity.json"
-    if not path.exists():
-        bad.append("missing meta/integrity.json (the v1.0 compatibility view)")
-        return
-    view = json.loads(path.read_text(encoding="utf-8"))
-    check(view.get("raw_responses_included") is False,
-          "meta/integrity.json must state raw_responses_included=false", bad)
-    check(sha256(ROOT / "meta" / "judges.csv") == view["meta"]["judges.csv"],
-          "meta/judges.csv: sha256 differs from meta/integrity.json", bad)
-    index = json.loads((ROOT / "datasets" / "index.json").read_text(encoding="utf-8"))
-    by_legacy = {e["legacy_key"]: e for e in index["datasets"] if e.get("legacy_key")}
-    check(set(view["datasets"]) == set(by_legacy),
-          f"meta/integrity.json covers {sorted(view['datasets'])}, index has "
-          f"{sorted(by_legacy)}", bad)
-    for key, node in view["datasets"].items():
-        if key not in by_legacy:
-            continue
-        m = json.loads((ROOT / by_legacy[key]["manifest"]).read_text(encoding="utf-8"))
-        check(node["items"] == {"n": m["items"]["n"], "sha256": m["items"]["sha256"]},
-              f"integrity view {key}: items record differs from the manifest", bad)
-        check(node["labels"] == m["task"]["labels"],
-              f"integrity view {key}: labels differ from the manifest", bad)
-        for arm in ("baseline", "swap"):
-            check(node.get(arm) == m["arms"][arm]["files"],
-                  f"integrity view {key}/{arm}: per-file records differ from the manifest "
-                  "(run scripts/build_manifests.py)", bad)
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dataset", action="append", metavar="DATASET_ID",
@@ -170,15 +138,13 @@ def main() -> int:
         total += n
         print(f"  {entry['dataset_id']:22} {n:>4} files  k={entry['panel_k']}  "
               f"items={entry['n_items']:,}  arms={'+'.join(entry['arms'])}")
-    if not args.dataset:
-        verify_derived_integrity(bad)
     if bad:
         print(f"FAILED ({len(bad)} problems):")
         for m in bad[:40]:
             print("  -", m)
         return 1
     print(f"OK: {total} released files verified against {len(wanted)} dataset manifest(s) "
-          "(sha256, rows, ids, parse_fail, variants, panel roster, integrity view)")
+          "(sha256, rows, ids, parse_fail, variants, panel roster)")
     return 0
 
 

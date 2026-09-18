@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Rebuild every dataset manifest, the dataset index, and the derived integrity view.
+"""Rebuild every dataset manifest and the dataset index.
 
 Run from the repository root after adding or changing a dataset:
 
-    python3 scripts/build_manifests.py            # rewrite, then check nothing drifted
+    python3 scripts/build_manifests.py            # rewrite every generated file
     python3 scripts/build_manifests.py --check    # fail instead of writing (CI use)
 
 Single source of truth: file records are computed from the files themselves. Each dataset
 owns `datasets/<id>/manifest.json`; `datasets/index.json` records only each manifest's own
-sha256, never a copy of the per-file hashes. `meta/integrity.json` is a *derived* v1.0-shaped
-view kept because the paper's supplement shells out to `scripts/verify.py`; it is regenerated
-here and cross-checked by the verifier, so it cannot drift silently.
+sha256, never a copy of the per-file hashes. Nothing else stores a per-file hash.
 
 Adding a dataset means: create `datasets/<id>/`, describe it in `DATASETS[<id>]`, run this.
 
@@ -215,35 +213,6 @@ def score_only_manifest(dsid: str, spec: dict) -> dict:
             "license": spec["license"]}
 
 
-def derived_integrity(manifests: dict) -> dict:
-    """v1.0-shaped integrity view, regenerated from the manifests (never hand-edited).
-
-    Kept because the paper's supplement runs `scripts/verify.py`, which historically read
-    this file. The verifier re-derives it and compares, so it cannot drift from the manifests.
-    """
-    out = {}
-    for dsid, m in manifests.items():
-        if m.get("legacy_key") is None:
-            continue
-        node = {"items": {"n": m["items"]["n"], "sha256": m["items"]["sha256"]},
-                "labels": m["task"]["labels"]}
-        for arm, a in m["arms"].items():
-            node[arm] = {j: {k: v for k, v in rec.items()} for j, rec in a["files"].items()}
-            if a.get("panel_excluded_from_arm_analysis"):
-                node["swap_panel_drop"] = a["panel_excluded_from_arm_analysis"]
-        out[m["legacy_key"]] = node
-    return {"datasets": dict(sorted(out.items())),
-            "generated_by": "scripts/build_manifests.py",
-            "derived_from": "datasets/*/manifest.json (authoritative)",
-            "meta": {"judges.csv": sha256(ROOT / "meta" / "judges.csv")},
-            "panel_size": 32,
-            "public_vote_fields": {"baseline": ARM_FIELDS["baseline"],
-                                   "swap": ARM_FIELDS["swap"]},
-            "raw_responses_included": False,
-            "note": "v1.0 compatibility view. Per-dataset records live in "
-                    "datasets/<id>/manifest.json; see COMPATIBILITY.md."}
-
-
 def build() -> dict:
     manifests = {}
     for dsid, spec in DATASETS.items():
@@ -258,8 +227,7 @@ def index_of(manifests: dict, written: dict) -> dict:
             "what": "Per-item votes from a fixed 32-judge LLM panel, one directory per dataset.",
             "panel_invariant": "Every dataset in this repository is judged by 32 judges. "
                                "The roster of a given collection round is pinned in panel/.",
-            "panel_files": sorted({m["panel"]["file"] for m in manifests.values()})
-                           + ["meta/judges.csv"],
+            "panel_files": sorted({m["panel"]["file"] for m in manifests.values()}),
             "datasets": [{"dataset_id": dsid, "family": m["family"], "title": m["title"],
                           "task_type": m["task"]["type"], "n_items": m["n_items"],
                           "panel_k": m["panel"]["k"], "arms": sorted(m["arms"]),
@@ -287,7 +255,6 @@ def main() -> int:
         targets[p] = text
         written[dsid] = hashlib.sha256(text.encode("utf-8")).hexdigest()
     targets[ROOT / "datasets" / "index.json"] = jdump(index_of(manifests, written))
-    targets[ROOT / "meta" / "integrity.json"] = jdump(derived_integrity(manifests))
 
     stale = [p for p, text in targets.items()
              if not p.exists() or p.read_text(encoding="utf-8") != text]

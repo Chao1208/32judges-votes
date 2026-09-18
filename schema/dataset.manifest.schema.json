@@ -14,7 +14,7 @@
   "family": {"type": "string", "description": "Source corpus family, e.g. chaosnli, civil-comments."},
   "title": {"type": "string"},
   "legacy_key": {"type": ["string", "null"],
-                 "description": "The v1.0 dataset key (mnli_m / snli / alphanli) used by the paper, the analysis CLI and meta/integrity.json. null for datasets added after v1.0."},
+                 "description": "The dataset key (mnli_m / snli / alphanli) taken by the analysis CLI. null for datasets that have no CLI key."},
   "task": {"type": "object", "required": ["type", "labels"],
            "properties": {"type": {"type": "string"},
                           "labels": {"type": "array", "items": {"type": "string"}},

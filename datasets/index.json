@@ -5,8 +5,7 @@
  "panel_invariant": "Every dataset in this repository is judged by 32 judges. The roster of a given collection round is pinned in panel/.",
  "panel_files": [
   "panel/panel-chaosnli.json",
-  "panel/panel-civil-comments-1000.json",
-  "meta/judges.csv"
+  "panel/panel-civil-comments-1000.json"
  ],
  "datasets": [
   {

@@ -21,7 +21,7 @@ def main():
     args = parser.parse_args()
     if args.atol <= 0.:
         parser.error("--atol must be positive")
-    expected = json.loads((root / "meta/analysis/reported_values.json").read_text())["datasets"]
+    expected = json.loads((root / "reference/reported_values.json").read_text())["datasets"]
     args.output_dir.mkdir(parents=True, exist_ok=True)
     if args.verify_archive:
         check = subprocess.run([sys.executable, str(args.repo_root / "scripts/verify.py")],

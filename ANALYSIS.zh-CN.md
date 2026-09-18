@@ -22,7 +22,7 @@ python3 src/analyze_panel.py --dataset mnli_m \
 `old_label` 是另一种目标，不是默认gold。
 
 代码若作为论文补充单独提供，加 `--repo-root path/to/32judges-votes` 指向含
-`datasets/<数据集>/` 与 `meta/judges.csv` 的公开数据仓库（v1.0-paper 那种顶层 `votes/`、`items/` 的布局同样可用）。从分析代码包目录执行命令即可；
+`datasets/<数据集>/` 与 `panel/` 的公开数据仓库。从分析代码包目录执行命令即可；
 代码和数据无需位于同一父目录。
 
 ## 占位失败与论文复现
@@ -39,7 +39,7 @@ python3 src/verify_paper.py --chaosnli path/to/chaosNLI_v1.0 \
   --output-dir results/paper-verification --verify-archive
 ```
 
-`verify_paper.py` 重读三集输入并逐项比较 `meta/analysis/reported_values.json`，写出绝对误差，
+`verify_paper.py` 重读三集输入并逐项比较 `reference/reported_values.json`，写出绝对误差，
 默认容差 `1e-10`。代码与数据分开时同样支持 `--repo-root`。只核验固定主表，不代表全篇复现。
 
 ## 指标与校准边界
@@ -102,5 +102,5 @@ python3 scripts/verify.py  # 在数据仓库内运行
 registry路径和采集依赖。公开入口对退化情况明确检查，无须API配置或密钥。
 
 已发布的投票、题目清单与元数据使用原 `LICENSE` 的 CC BY 4.0；旧scripts使用未改动的 `LICENSE-CODE`（MIT）。
-新增src、tests和分析文档使用 `src/LICENSE`（MIT）。meta/analysis的已保存派生摘要使用CC BY 4.0。
+新增src、tests和分析文档使用 `src/LICENSE`（MIT）。`reference/` 下已保存的派生摘要使用 CC BY 4.0。
 不转发ChaosNLI题目和人类计数；其CC BY-NC 4.0条款继续适用，关联数据请勿放入公开包。

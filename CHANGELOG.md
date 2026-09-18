@@ -21,8 +21,7 @@ datasets/<dataset_id>/{manifest.json, README.md, items/uids.txt, votes/<arm>/*.j
 * `items/<dataset>_uids.txt` → `datasets/chaosnli-<dataset>/items/uids.txt`
 * `civil_comments/f15_public_scores.json` → `datasets/civil-comments-1000/votes/baseline/scores.json`
 * `civil_comments/f15_public_manifest.json` → `datasets/civil-comments-1000/manifest-source.json`
-
-`civil_comments/` is kept as a directory with a pointer README, because the paper deep-links to it.
+* `meta/analysis/` → `reference/`
 
 **Added**
 
@@ -31,31 +30,37 @@ datasets/<dataset_id>/{manifest.json, README.md, items/uids.txt, votes/<arm>/*.j
 * `datasets/<id>/manifest.json` — the authoritative per-dataset record (task, labels, items, arms,
   panel, per-file sha256/rows/ids/parse_fail), generated from the files themselves.
 * `panel/panel-chaosnli.json`, `panel/panel-civil-comments-1000.json` — the 32-judge roster pinned
-  per collection round, with the six-judge difference between rounds and why it exists.
+  per collection round, with the six-judge difference between rounds and why it exists. These
+  replace `meta/judges.csv`, which held the ChaosNLI roster only.
 * `schema/` — JSON Schema for vote records, dataset manifests and the index.
-* `scripts/build_manifests.py` — regenerates the manifests, the index and the integrity view;
-  `--check` fails if anything on disk is stale. Replaces
-  `scripts/strip_raw_and_rebuild_integrity.py`, which is removed.
-* `scripts/link_v1_layout.py` — recreates the v1.0 paths as symlinks for code frozen against them.
-* `src/layout.py` — the single place that knows where a dataset's files live; accepts dataset ids
-  and v1.0 keys, and falls back to the v1.0 paths when a checkout has them.
-* `COMPATIBILITY.md`, `CHANGELOG.md`, `CITATION.cff`.
+* `scripts/build_manifests.py` — regenerates every manifest and the index; `--check` fails if
+  anything on disk is stale. Replaces `scripts/strip_raw_and_rebuild_integrity.py`.
+* `src/layout.py` — the single place that knows where a dataset's files live.
+* `CHANGELOG.md`, `CITATION.cff`.
 
 **Changed**
 
 * `scripts/verify.py` now verifies against the per-dataset manifests, covers the Civil Comments
-  score file as well (192 files), checks the pinned panel roster, and checks that
-  `meta/integrity.json` still agrees with the manifests.
-* `meta/integrity.json` keeps its path and its per-file hashes, and is now *derived* from the
-  manifests by `build_manifests.py`. It gained `derived_from` and a note; its
-  `public_vote_fields` is keyed by arm name (`baseline` / `swap`) instead of directory name.
+  score file as well (192 files), and checks the pinned panel roster.
 * `scripts/join_chaosnli.py --arm` takes `baseline` / `swap` (was `votes` / `votes_swap`).
-* `tests/` builds its fixture in the v2.0 layout and adds a test that the v1.0 layout still loads.
+* `tests/` builds its fixture in the new layout; the judge roster now comes from the pinned panel
+  file, and an extra vote file is an error.
 
-**Unchanged**: every vote file's bytes and sha256; `meta/judges.csv`; `meta/analysis/`;
-`src/analyze_panel.py`, `src/verify_paper.py`, `src/votes_io.py`, `src/formulas.py`;
-`reproduce.py`; judge keys; dataset keys `mnli_m` / `snli` / `alphanli`; panel keys `F15_10` …
-`F15_32` inside the Civil Comments score file; label vocabularies; `parse_fail` semantics.
+**Removed**
+
+* `meta/` — `judges.csv` (superseded by `panel/`), `integrity.json` (superseded by the per-dataset
+  manifests) and `analysis/` (moved to `reference/`).
+* `civil_comments/` — the score file moved under `datasets/`; nothing was left behind, so the
+  paper's `/tree/main/civil_comments` deep links no longer resolve.
+* `scripts/strip_raw_and_rebuild_integrity.py`.
+
+No compatibility shims are shipped: the repository had no external users at the time of the
+restructure, so old paths were deleted rather than aliased.
+
+**Unchanged**: every vote file's bytes and sha256; `src/analyze_panel.py`, `src/verify_paper.py`,
+`src/votes_io.py`, `src/formulas.py`; `reproduce.py`; judge keys; dataset keys `mnli_m` / `snli` /
+`alphanli`; panel keys `F15_10` … `F15_32` inside the Civil Comments score file; label
+vocabularies; `parse_fail` semantics.
 
 **Verified after the restructure**: `scripts/verify.py` OK on 192 files; 12 unit tests OK;
 `reproduce.py` reproduces every fixed-panel value in the saved main table to within 1e-10 with 0

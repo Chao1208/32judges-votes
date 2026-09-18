@@ -18,9 +18,6 @@ This is the data release behind *How Many Humans Is a Judge Panel Worth?* (see
 per-item votes from scratch every time: the votes are cheap to consume and expensive to produce.
 Reuse them.
 
-**Renamed from `chaosnli-judge-votes`.** Old links still work, and the layout the paper describes
-is frozen at the `v1.0-paper` tag — see [COMPATIBILITY.md](COMPATIBILITY.md).
-
 ## Layout
 
 ```
@@ -31,18 +28,16 @@ datasets/<dataset_id>/items/uids.txt         item roster, in sampling order
 datasets/<dataset_id>/votes/baseline/*.jsonl one file per judge, one JSON object per line
 datasets/<dataset_id>/votes/swap/*.jsonl     presentation-order arm, where collected
 panel/panel-<round>.json                     the 32-judge roster pinned per collection round
-meta/judges.csv                              judge key -> model id, vendor family (v1.0 path)
-meta/analysis/                                saved calibration curves and paper reference values
-meta/integrity.json                           v1.0-shaped integrity view, derived from the manifests
-schema/                                       JSON Schema for vote records, manifests, the index
-scripts/verify.py                             re-check every released file against the manifests
-scripts/build_manifests.py                    regenerate manifests, index and the integrity view
-scripts/join_chaosnli.py                      join ChaosNLI's human counts onto the votes
-scripts/link_v1_layout.py                     recreate the v1.0 paths as symlinks, for old code
-src/                                          portable fixed-panel analysis code
-reproduce.py                                  integrity -> tests -> paper-table verification
-ANALYSIS.md / REPRODUCE.md                    analysis scope; single-entry reproduction guide
-COMPATIBILITY.md                              rename, old-path map, v1.0 tag, unchanged names
+                                             (judge key -> model id, vendor family)
+reference/                                   saved calibration curves and paper reference values
+schema/                                      JSON Schema for vote records, manifests, the index
+scripts/verify.py                            re-check every released file against the manifests
+scripts/build_manifests.py                   regenerate the manifests and the index
+scripts/join_chaosnli.py                     join ChaosNLI's human counts onto the votes
+src/                                         portable fixed-panel analysis code
+reproduce.py                                 integrity -> tests -> paper-table verification
+ANALYSIS.md / REPRODUCE.md                   analysis scope; single-entry reproduction guide
+CHANGELOG.md                                 what changed between releases
 ```
 
 Adding a dataset means adding one directory under `datasets/` and one entry in
@@ -87,7 +82,7 @@ differ; the family deltas are recorded in the Civil Comments panel file. Consequ
 cross-dataset differences in this repository are **not** a controlled comparison of corpora.
 
 Model ids are the exact requested model strings; backend identity and version are not
-independently authenticated. `earlier_generation` in `meta/judges.csv` is retained as recorded
+independently authenticated. `earlier_generation` in the ChaosNLI roster is retained as recorded
 metadata, not as evidence of backend chronology or capability. Collection used a single user
 message, no system message, temperature 0, and a constrained answer format.
 
@@ -116,8 +111,8 @@ python3 scripts/verify.py --dataset chaosnli-snli   # one dataset
 For every dataset this checks each manifest against the hash recorded in `datasets/index.json`,
 then every released file against its manifest record — sha256, rows, unique ids, `parse_fail`
 count, rows per variant — that no vote record carries an undeclared field, that every uid is in
-the item roster, that the judges present match the pinned 32-judge roster, and that
-`meta/integrity.json` still agrees with the manifests. 192 files are covered today.
+the item roster, and that the judges present match the pinned 32-judge roster. 192 files are
+covered today. `scripts/build_manifests.py --check` fails if any manifest is stale.
 
 ## Reproducing the paper
 
@@ -161,7 +156,7 @@ prevalence claim can be read off it.
 
 ## Licensing
 
-Data (`datasets/*/votes/`, `datasets/*/items/`, `panel/`, `meta/`): **CC BY 4.0** — see `LICENSE`.
+Data (`datasets/*/votes/`, `datasets/*/items/`, `panel/`, `reference/`): **CC BY 4.0** — see `LICENSE`.
 Existing collection scripts (`scripts/`): **MIT** — see `LICENSE-CODE`. Analysis code (`src/`,
 `tests/`) and documentation: **MIT** — see `src/LICENSE`.
 
@@ -189,8 +184,7 @@ use.
   year         = {2026},
   version      = {2.0},
   howpublished = {\url{https://github.com/Chao1208/32judges-votes}},
-  note         = {Data release of the paper above. Renamed from chaosnli-judge-votes;
-                  the layout cited by the paper is tagged v1.0-paper. CC BY 4.0}
+  note         = {Data release of the paper above. CC BY 4.0}
 }
 
 @inproceedings{nie2020chaosnli,
@@ -206,15 +200,11 @@ use.
 Civil Comments comes from the Jigsaw Unintended Bias in Toxicity Classification data (CC0); cite
 it as that competition's dataset.
 
-[`CITATION.cff`](CITATION.cff) carries the machine-readable form. Pin what you used: `v1.0-paper`
-for the paper's layout, `v2.0` or later for this one, or a commit sha.
+[`CITATION.cff`](CITATION.cff) carries the machine-readable form. Pin a release tag or a commit
+sha for whatever you used.
 
-## Compatibility
+## History
 
-[COMPATIBILITY.md](COMPATIBILITY.md) covers the rename and its redirects, an old-path → new-path
-table for every path the paper names, how to run code frozen against the v1.0 layout, and which
-names deliberately did **not** change (judge keys, dataset keys, the `F15_32` panel key, label
-vocabularies). Short version: nothing was recollected or recomputed, every file is byte-identical
-to v1.0, and `reproduce.py` still reproduces the paper's fixed-panel table to within 1e-10.
-
-Changes between releases are listed in [CHANGELOG.md](CHANGELOG.md).
+This repository was published as `chaosnli-judge-votes` and renamed once Civil Comments was added;
+GitHub redirects the old URL. The pre-restructure tree is tagged `v1.0-paper`. Release-to-release
+changes are in [CHANGELOG.md](CHANGELOG.md).

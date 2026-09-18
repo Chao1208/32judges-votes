@@ -10,8 +10,8 @@ exact roster that produced it.
 | `panel-civil-comments-1000.json` | Civil Comments collection | `civil-comments-1000` |
 
 Each file lists, per judge, the `judge_key` used in every vote file, the exact requested
-`model_id`, and the vendor `family`. `../meta/judges.csv` is the same key → model table in CSV, kept
-at its v1.0 path because the paper cites it.
+`model_id`, and the vendor `family`. These files are the only judge roster in the repository: the
+manifests, `scripts/verify.py` and the analysis code all take the panel from here.
 
 ## Same size, different roster
 
@@ -31,7 +31,7 @@ Two consequences for anyone using this data:
    same-family judges is not simply a "larger panel".
 
 Model ids are the requested strings; backend identity and version are not independently
-authenticated. `earlier_generation` in `meta/judges.csv` is retained as recorded metadata, not as
+authenticated. `earlier_generation` in the ChaosNLI roster is retained as recorded metadata, not as
 evidence of backend chronology or capability.
 
 `scripts/build_manifests.py` fails if a roster file and the judges actually present in a dataset

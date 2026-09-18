@@ -28,12 +28,6 @@ keywords:
   - annotation disagreement
   - natural language inference
   - toxicity classification
-identifiers:
-  - type: url
-    value: "https://github.com/Chao1208/32judges-votes/releases/tag/v1.0-paper"
-    description: >-
-      The frozen layout cited by the paper; the repository was previously named
-      chaosnli-judge-votes and old URLs redirect.
 references:
   - type: article
     title: >-

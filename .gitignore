@@ -3,9 +3,3 @@ __pycache__/
 .venv/
 checks/
 results/
-
-# v1.0 compatibility symlinks created by scripts/link_v1_layout.py (never committed)
-/votes/
-/votes_swap/
-/items/
-/civil_comments/f15_public_scores.json

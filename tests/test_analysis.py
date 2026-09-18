@@ -1,7 +1,6 @@
 """Contract and analytic tests; no model calls or upstream data required."""
 import csv
 import json
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -87,10 +86,13 @@ class InputContractTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
-        for name in ("datasets/chaosnli-mnli-m/items", self.VOTES, "meta/analysis"):
+        for name in ("datasets/chaosnli-mnli-m/items", self.VOTES, "panel", "reference"):
             (self.root / name).mkdir(parents=True)
         (self.root / "datasets/chaosnli-mnli-m/items/uids.txt").write_text("u3\nu1\nu2\n")
-        (self.root / "meta/judges.csv").write_text("judge_key\na\nb\n")
+        (self.root / "datasets/chaosnli-mnli-m/manifest.json").write_text(json.dumps(
+            {"dataset_id": "chaosnli-mnli-m", "panel": {"file": "panel/panel-test.json", "k": 2}}))
+        (self.root / "panel/panel-test.json").write_text(json.dumps(
+            {"panel_id": "test", "k": 2, "judges": [{"judge_key": "a"}, {"judge_key": "b"}]}))
         self.human_path = self.root / "human.jsonl"
         self.human_rows = [{"uid": "u1", "label_counter": {"e": 50, "n": 50}, "majority_label": "n"},
                            {"uid": "u2", "label_counter": {"e": 100}, "majority_label": "e"},
@@ -145,28 +147,19 @@ class InputContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.load()
 
-    def test_v1_layout_still_loads(self):
-        """A v1.0-shaped checkout (or the link shim) must keep working: same panel, same hashes."""
-        old = Path(tempfile.mkdtemp())
-        self.addCleanup(shutil.rmtree, old, True)
-        (old / "items").mkdir()
-        (old / "votes/mnli_m").mkdir(parents=True)
-        (old / "meta").mkdir()
-        (old / "items/mnli_m_uids.txt").write_text("u3\nu1\nu2\n")
-        (old / "meta/judges.csv").write_text("judge_key\na\nb\n")
-        for judge in ("a", "b"):
-            self.write(old / f"votes/mnli_m/{judge}.jsonl", self.vote_rows)
-        v1 = load_panel(old, "mnli_m", self.human_path, "paper-retained")
-        v2 = self.load("paper-retained")
-        self.assertEqual(v1.uids, v2.uids)
-        self.assertEqual(v1.provenance["roster_sha256"], v2.provenance["roster_sha256"])
+    def test_panel_roster_is_the_only_judge_source(self):
+        """The pinned panel file decides who is in the panel; an extra vote file is an error."""
         self.assertEqual(layout.dataset_id("mnli_m"), "chaosnli-mnli-m")
-        self.assertEqual(layout.legacy_key("chaosnli-mnli-m"), "mnli_m")
-        self.assertIsNone(layout.legacy_key("civil-comments-1000"))
+        self.assertEqual(layout.chaosnli_key("chaosnli-mnli-m"), "mnli_m")
+        self.assertIsNone(layout.chaosnli_key("civil-comments-1000"))
+        self.assertEqual(layout.panel_judges(self.root, "mnli_m"), ["a", "b"])
+        self.write(self.root / f"{self.VOTES}/c.jsonl", self.vote_rows)
+        with self.assertRaises(ValueError):
+            self.load()
 
     def test_saved_curve_requires_same_items_and_counts(self):
         panel = self.load("paper-retained")
-        directory = self.root / "meta/analysis"
+        directory = self.root / "reference"
         curve = directory / "calibration_curves.csv"
         curve.write_text("dataset,anchor,m,PR_mean\nmnli_m,h,2,1.9\nmnli_m,h,4,3.7\n")
         manifest = {"calibration_curves_sha256": sha256(curve), "datasets": {"mnli_m": {

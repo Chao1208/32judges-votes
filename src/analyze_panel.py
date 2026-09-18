@@ -20,7 +20,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", required=True, choices=sorted(LABELS))
     parser.add_argument("--repo-root", type=Path, default=package_root,
-                        help="dataset repository containing votes/, items/ and meta/")
+                        help="dataset repository containing datasets/ and panel/")
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--chaosnli", type=Path, help="user-provided chaosNLI_v1.0 directory")
     source.add_argument("--human-data", type=Path, help="user-provided full or sampled JSONL")
@@ -28,7 +28,7 @@ def main(argv=None):
                         help="supplied gold field; default preserves upstream majority_label ties")
     parser.add_argument("--failure-policy", choices=("drop-items", "paper-retained"), default="drop-items",
                         help="default drops each item with any placeholder; paper-retained reproduces the main table")
-    parser.add_argument("--calibration-dir", type=Path, default=package_root / "meta" / "analysis",
+    parser.add_argument("--calibration-dir", type=Path, default=package_root / "reference",
                         help="directory holding saved calibration CSV and manifest")
     parser.add_argument("--no-calibration", action="store_true", help="skip saved-curve nu_H")
     parser.add_argument("--output", type=Path, help="JSON output; otherwise print to stdout")

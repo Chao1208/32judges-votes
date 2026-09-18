@@ -19,9 +19,6 @@ ChaosNLI 侧合计 221,474 格判断，Civil Comments 侧另有 32,000 格。
 这是论文《How Many Humans Is a Judge Panel Worth?》的数据发布（见[引用](#引用)）。发布它的理由
 很直接：这一线研究至今每篇都要自采一遍逐题投票，票便宜用、贵采。
 
-**本仓库原名 `chaosnli-judge-votes`。** 旧链接仍然可用（GitHub 永久重定向），论文按字面引用的那套
-布局冻结在 `v1.0-paper` tag 上——详见 [COMPATIBILITY.md](COMPATIBILITY.md)。
-
 源语料一律**不转发**：ChaosNLI 是 CC BY-NC 4.0，按 `uid` 自行关联；Civil Comments 是 CC0，本仓库
 只有不可逆的题目哈希与人类汇总值。离线固定面板分析在 `src/`，说明见
 [ANALYSIS.zh-CN.md](ANALYSIS.zh-CN.md)；串联复现用[总入口](REPRODUCE.zh-CN.md)与
@@ -37,18 +34,16 @@ datasets/<数据集>/items/uids.txt             题目清单，按抽样顺序
 datasets/<数据集>/votes/baseline/*.jsonl     基线臂，一家判官一个文件、一行一条记录
 datasets/<数据集>/votes/swap/*.jsonl         呈现顺序调换臂（采到的部分）
 panel/panel-<轮次>.json                      每轮采集的 32 家名单
-meta/judges.csv                              判官键 → 模型标识、厂商家族（v1.0 原路径）
-meta/analysis/                               保存的校准曲线与论文参考值
-meta/integrity.json                          v1.0 形状的完整性视图，由各 manifest 派生
+                                             （判官键 → 模型标识、厂商家族）
+reference/                                   保存的校准曲线与论文参考值
 schema/                                      投票记录、manifest、注册表的 JSON Schema
 scripts/verify.py                            按各数据集 manifest 复核每个已发布文件
-scripts/build_manifests.py                   重新生成 manifest、注册表与完整性视图
+scripts/build_manifests.py                   重新生成各 manifest 与注册表
 scripts/join_chaosnli.py                     把票与 ChaosNLI 的百人标注计数关联起来
-scripts/link_v1_layout.py                    用符号链接重建 v1.0 路径，给旧代码用
 src/                                         便携固定面板分析代码
 reproduce.py                                 完整性检查 → 测试 → 论文主表核验
 ANALYSIS.zh-CN.md / REPRODUCE.zh-CN.md       分析范围；复现总入口
-COMPATIBILITY.md                             改名、旧路径对照、v1.0 tag、哪些名字没变
+CHANGELOG.md                                 两次发布之间改了什么
 ```
 
 加一个数据集 = 在 `datasets/` 下加一个目录、在 `scripts/build_manifests.py` 里加一条，然后跑一次。
@@ -86,7 +81,7 @@ COMPATIBILITY.md                             改名、旧路径对照、v1.0 tag
 共 6 家不同，逐家差异与家族增减记在 Civil Comments 那个面板文件的 `differs_from_chaosnli_round` 里。
 **因此：本仓库里跨数据集的差异不是语料的受控比较**——任务、人类参照、面板构成三者同时不同。
 
-`meta/judges.csv` 中历史 `earlier_generation` 标记原样保留，不能当作独立核验的后端代际或能力证据。
+ChaosNLI 名单中历史 `earlier_generation` 标记原样保留，不能当作独立核验的后端代际或能力证据。
 
 模型标识按请求字符串原样记录，未独立鉴定后端身份和版本。采集使用单条用户消息、
 无系统提示、温度0和受限回答格式；逐字提示词与请求代码不放入本公开仓库。
@@ -148,16 +143,22 @@ python3 scripts/verify.py
 
 对每个数据集：先核各 manifest 与 `datasets/index.json` 记录的哈希是否一致，再逐个核已发布文件的
 sha256、行数、uid 数、`parse_fail` 数与各 variant 行数，核对没有记录带未声明字段、没有 uid 落在题目
-清单之外、在场判官与 `panel/` 钉的 32 家名单一致，以及 `meta/integrity.json` 仍与各 manifest 相符。
+清单之外、在场判官与 `panel/` 钉的 32 家名单一致。`scripts/build_manifests.py --check` 在任一
+manifest 过期时报错。
 目前覆盖 192 个文件。加 `--dataset <数据集>` 只核一个。
 
 ## 许可
 
-数据（`datasets/*/votes/`、`datasets/*/items/`、`panel/`、`meta/`）：**CC BY 4.0**，见 `LICENSE`。
+数据（`datasets/*/votes/`、`datasets/*/items/`、`panel/`、`reference/`）：**CC BY 4.0**，见 `LICENSE`。
 旧代码（`scripts/`）：**MIT**，见未修改的 `LICENSE-CODE`。
 新增分析代码（`src/`、`tests/`）及文档：**MIT**，见 `src/LICENSE`。
 ChaosNLI 不在本仓库内、仍按它自己的 **CC BY-NC 4.0** 条款；把我们的票与 ChaosNLI 关联后得到的
 派生数据继承那份条款。
+
+## 沿革
+
+本仓库最初发布名为 `chaosnli-judge-votes`，加入 Civil Comments 后改名；GitHub 对旧地址永久重定向。
+改造前的目录树留在 `v1.0-paper` tag 上。两次发布之间的变化见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 引用
 
