@@ -1,0 +1,11 @@
+{
+ "file": "f15_public_scores.json",
+ "sha256": "040dba5cba20f573e0e86991171dcecfcba4774a2186de93d4d6099f44557b59",
+ "bytes": 1074000,
+ "source_manifest_sha256": {
+  "final_ids": "4b4f60d725f638d2dd560dbadf22214e38ed999dbee0933f124392d98387f294",
+  "final_with_fractions": "a3d250cb0bb062a687d598f1b3ac748534df3821fbd420c5759ce6cda97f4e54",
+  "reserve_ids": "5328b803d0a6fe67b8cbfc984f2568bd6d6aec47f413e386200609e898531834"
+ },
+ "panel_frozen_sha256": "571aaba998ccce9ab047d26683d9f1347c8ddcb952077ea8a162b70353591dfc"
+}

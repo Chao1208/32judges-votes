@@ -32,6 +32,8 @@ scripts/join_chaosnli.py             joins the votes with ChaosNLI's 100-annotat
 src/analyze_panel.py                 portable fixed-panel analysis CLI
 src/verify_paper.py                  compare actual outputs with the saved main table
 meta/analysis/                      saved calibration, reference summaries, and manifest
+civil_comments/f15_public_scores.json  score-only Civil Comments external-validation release
+civil_comments/f15_public_manifest.json score-file hash and release provenance
 ANALYSIS.md                         offline analysis instructions and scope
 REPRODUCE.md                       Step 1--N guide and single reproduction entry point
 reproduce.py                       integrity → tests → paper-table verification
