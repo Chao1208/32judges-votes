@@ -30,7 +30,7 @@ CHAOSNLI_LICENSE = {"votes": "CC BY 4.0", "items": "CC BY 4.0",
 
 # One entry per dataset. Everything that cannot be computed from the files lives here.
 DATASETS: dict[str, dict] = {
-    "chaosnli-mnli-m": {
+    "chaosnli-mnli-m-1000": {
         "legacy_key": "mnli_m", "family": "chaosnli",
         "title": "ChaosNLI MNLI-matched — 32 judges, baseline and presentation-order arms",
         "swap_panel_drop": {"dsv32": "channel died; only variant 0 was ever collected "
@@ -44,7 +44,7 @@ DATASETS: dict[str, dict] = {
                             "how_to_join": "scripts/join_chaosnli.py"},
         "license": CHAOSNLI_LICENSE,
     },
-    "chaosnli-snli": {        "legacy_key": "snli", "family": "chaosnli",
+    "chaosnli-snli-1000": {        "legacy_key": "snli", "family": "chaosnli",
         "title": "ChaosNLI SNLI — 32 judges, baseline and presentation-order arms",
         "swap_panel_drop": {"dsv32": "complete here, but excluded so that one panel is used "
                                      "across datasets (same rule as the baseline arm)"},
@@ -57,7 +57,7 @@ DATASETS: dict[str, dict] = {
                             "how_to_join": "scripts/join_chaosnli.py"},
         "license": CHAOSNLI_LICENSE,
     },
-    "chaosnli-alphanli": {
+    "chaosnli-alphanli-1000": {
         "legacy_key": "alphanli", "family": "chaosnli",
         "title": "ChaosNLI alphaNLI — 32 judges, baseline and presentation-order arms",
         "swap_panel_drop": {

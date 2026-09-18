@@ -7,9 +7,9 @@
 
 | 数据集 | 任务 | 题数 | 臂 | 面板 | 发布层 |
 |---|---|---|---|---|---|
-| [`chaosnli-mnli-m`](datasets/chaosnli-mnli-m) | 三选一 NLI（`e`/`n`/`c`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
-| [`chaosnli-snli`](datasets/chaosnli-snli) | 三选一 NLI（`e`/`n`/`c`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
-| [`chaosnli-alphanli`](datasets/chaosnli-alphanli) | 二选一溯因（`1`/`2`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
+| [`chaosnli-mnli-m-1000`](datasets/chaosnli-mnli-m-1000) | 三选一 NLI（`e`/`n`/`c`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
+| [`chaosnli-snli-1000`](datasets/chaosnli-snli-1000) | 三选一 NLI（`e`/`n`/`c`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
+| [`chaosnli-alphanli-1000`](datasets/chaosnli-alphanli-1000) | 二选一溯因（`1`/`2`） | 1,000 | 基线 + 呈现顺序 | 32 | 逐题投票 |
 | [`civil-comments-1000`](datasets/civil-comments-1000) | 二元毒性（`TOXIC`/`NON-TOXIC`） | 1,000 | 基线 | 32 | 仅分数层 |
 
 ChaosNLI 侧合计 221,474 格判断，Civil Comments 侧另有 32,000 格。
@@ -45,6 +45,9 @@ reproduce.py                                 完整性检查 → 测试 → 论�
 ANALYSIS.zh-CN.md / REPRODUCE.zh-CN.md       分析范围；复现总入口
 CHANGELOG.md                                 两次发布之间改了什么
 ```
+
+数据集 id 由**语料名 + 样本规模**组成（`chaosnli-snli-1000`、`civil-comments-1000`）：同一个语料可以
+被抽样多次，每个样本由各自那轮面板判过，规模写进 id 才能一眼分清。
 
 加一个数据集 = 在 `datasets/` 下加一个目录、在 `scripts/build_manifests.py` 里加一条，然后跑一次。
 别的数据集一个文件都不用动。

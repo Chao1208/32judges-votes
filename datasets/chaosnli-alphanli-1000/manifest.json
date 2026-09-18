@@ -1,6 +1,6 @@
 {
  "schema": "schema/dataset.manifest.schema.json",
- "dataset_id": "chaosnli-alphanli",
+ "dataset_id": "chaosnli-alphanli-1000",
  "family": "chaosnli",
  "title": "ChaosNLI alphaNLI — 32 judges, baseline and presentation-order arms",
  "legacy_key": "alphanli",
@@ -28,14 +28,14 @@
   "how_to_join": "scripts/join_chaosnli.py"
  },
  "items": {
-  "path": "datasets/chaosnli-alphanli/items/uids.txt",
+  "path": "datasets/chaosnli-alphanli-1000/items/uids.txt",
   "n": 1000,
   "sha256": "cfa28df6ea227836432022caa8f58a02cb4a83fa11e7f12971ce182411b3337e",
   "order": "sampling order"
  },
  "arms": {
   "baseline": {
-   "path": "datasets/chaosnli-alphanli/votes/baseline",
+   "path": "datasets/chaosnli-alphanli-1000/votes/baseline",
    "record_fields": [
     "uid",
     "label",
@@ -240,7 +240,7 @@
    }
   },
   "swap": {
-   "path": "datasets/chaosnli-alphanli/votes/swap",
+   "path": "datasets/chaosnli-alphanli-1000/votes/swap",
    "record_fields": [
     "uid",
     "variant",

@@ -9,7 +9,7 @@
  ],
  "datasets": [
   {
-   "dataset_id": "chaosnli-mnli-m",
+   "dataset_id": "chaosnli-mnli-m-1000",
    "family": "chaosnli",
    "title": "ChaosNLI MNLI-matched — 32 judges, baseline and presentation-order arms",
    "task_type": "nli-3way",
@@ -21,11 +21,11 @@
    ],
    "release_tier": "per_item_votes",
    "legacy_key": "mnli_m",
-   "manifest": "datasets/chaosnli-mnli-m/manifest.json",
-   "manifest_sha256": "87d1ef02410f39b6986f635f38e50c65f9117c3c91d1d05b81d40150cf5b0e07"
+   "manifest": "datasets/chaosnli-mnli-m-1000/manifest.json",
+   "manifest_sha256": "cc0478c0338fe4968159b5018bf275dbe7afade0ae1affd9a883e0d06777c978"
   },
   {
-   "dataset_id": "chaosnli-snli",
+   "dataset_id": "chaosnli-snli-1000",
    "family": "chaosnli",
    "title": "ChaosNLI SNLI — 32 judges, baseline and presentation-order arms",
    "task_type": "nli-3way",
@@ -37,11 +37,11 @@
    ],
    "release_tier": "per_item_votes",
    "legacy_key": "snli",
-   "manifest": "datasets/chaosnli-snli/manifest.json",
-   "manifest_sha256": "4be8f65630caa2db1608e2b1045c10b8be5ff37b276a20299b0908e13ec01a16"
+   "manifest": "datasets/chaosnli-snli-1000/manifest.json",
+   "manifest_sha256": "e766465e528c81611e7aad2f141fcd68d2647114d5982ac247146c222dafaade"
   },
   {
-   "dataset_id": "chaosnli-alphanli",
+   "dataset_id": "chaosnli-alphanli-1000",
    "family": "chaosnli",
    "title": "ChaosNLI alphaNLI — 32 judges, baseline and presentation-order arms",
    "task_type": "abductive-2way",
@@ -53,8 +53,8 @@
    ],
    "release_tier": "per_item_votes",
    "legacy_key": "alphanli",
-   "manifest": "datasets/chaosnli-alphanli/manifest.json",
-   "manifest_sha256": "e7f8ef16a0a679236d25acca378755b9887e17eeac03ab7fb883c439ecff72d2"
+   "manifest": "datasets/chaosnli-alphanli-1000/manifest.json",
+   "manifest_sha256": "8fdc467b24d83f6783a33eb09b04613bf232b5d3e19ecc95781d5c672a9f7919"
   },
   {
    "dataset_id": "civil-comments-1000",

@@ -1,9 +1,9 @@
 {
  "schema": "schema/dataset.manifest.schema.json",
- "dataset_id": "chaosnli-mnli-m",
+ "dataset_id": "chaosnli-snli-1000",
  "family": "chaosnli",
- "title": "ChaosNLI MNLI-matched — 32 judges, baseline and presentation-order arms",
- "legacy_key": "mnli_m",
+ "title": "ChaosNLI SNLI — 32 judges, baseline and presentation-order arms",
+ "legacy_key": "snli",
  "task": {
   "type": "nli-3way",
   "labels": [
@@ -30,14 +30,14 @@
   "how_to_join": "scripts/join_chaosnli.py"
  },
  "items": {
-  "path": "datasets/chaosnli-mnli-m/items/uids.txt",
+  "path": "datasets/chaosnli-snli-1000/items/uids.txt",
   "n": 1000,
-  "sha256": "9b6f51f34e1e8dd656ab2b3fcdd9f982127f1c64ba6fbc653b1fa68fcdb77d2f",
+  "sha256": "f0e5bea82f6d674d7e689488bb732f3a010e5c9b7176fdbe0093ffcd1928c209",
   "order": "sampling order"
  },
  "arms": {
   "baseline": {
-   "path": "datasets/chaosnli-mnli-m/votes/baseline",
+   "path": "datasets/chaosnli-snli-1000/votes/baseline",
    "record_fields": [
     "uid",
     "label",
@@ -45,204 +45,204 @@
    ],
    "n_files": 32,
    "n_records": 32000,
-   "parse_fail_cells": 1,
+   "parse_fail_cells": 0,
    "files": {
     "doubao18": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "0a9edf5080e7b7539b550a311f5941fd8f3312b2bd06a894ec9b63d94e57e6bb"
+     "sha256": "d71e1dad0d4d1ec12bba36c54bcfab65aa054a659755e4568e80b93ccdeae2fc"
     },
     "doubao20pro": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "5b59c5b0ff2a42a8db16b60d176cd7b603c066eb99525b3e5ebb9599b129e225"
+     "sha256": "ac76c74ecef883264d25cfdf11aa524d2b78b78535629213b7a9886f3d69678f"
     },
     "dsv32": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "69c0e7186fc3d8cc293574f4339dd6fb8dbf00fc1b61ad0069d818a63755ff3b"
+     "sha256": "37f3dd403d33ef8e07d7d0cc24739e32e29037f65d3b8c5b14ae1baa6850727a"
     },
     "dsv4flash": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "5b30d2f916df23b5886acf63a918ddfee31fa6945d8fc1b98e73a8dee705a686"
+     "sha256": "17a5b956ab4109fee1f2038dd548f35cd25d499b4858d19f63574af660a24df4"
     },
     "dsv4pro": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "de67cb81371643b9b99d1ac6f68168abacee95843033732ecc96796f0c765f5e"
+     "sha256": "67ba4c9c807362ab24fe15321740bb358db5b25d8d7131a0572ce780f7257ed2"
     },
     "gem25pro": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "912d9eced0bd672316545f40e5787f9b165e23878a06f7c2ad2415cc2409d1fa"
+     "sha256": "99f181efe310decfe106ca2f910fb6746418767fa0f55913dbbbca2676ba710d"
     },
     "gem31pro": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "4c24ec98938c2003732ee91f46b1d6887766182d9c7b99c73e8e063fb204a0ae"
+     "sha256": "8726572503e8851d4f901c3d306d0ea60416ec3b4864d41593247f2cb58f7600"
     },
     "gem36flash": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "c161fd4d5de0089386f2a3f5cd2319ac374eff722c8683595189b2e7b385d674"
+     "sha256": "4bd64dc64831c5d4c59bedd79a1ec56adf88c334fbe3e3c26dcc23d948914fb2"
     },
     "gem37flash": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "4c666876e49020a5e7d281a8d6c7b58b66124246a4c71a0813b98d17f2d65e57"
+     "sha256": "bee8577973ff1445cf8383fb79adadc442b7a1b9d05a59630562435be6c6f6c0"
     },
     "glm5": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "334c2f406e259d254a189273207f1c71d6ebf26a187ba0f4ef3f6b4d80331968"
+     "sha256": "bb7a6ef3c2259cfc164e4a403484f4570fc03349decea3f41d8298666d0592b8"
     },
     "glm51": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "82161300cf4adf371dcf7132a33bd662146ff1c8a7293b8d21a66efdb5e3cb7d"
+     "sha256": "8d4013795f30fc9f39445c1e5763fce4abc04fc0873dfae6252c461d9449a8eb"
     },
     "glm52": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "789e9d593335205ec9a3663bf152688aa52e4d85d7d9b06249903986df7b784b"
+     "sha256": "27651aad63f65ec900642ad554d61ef5c8157a916f3cb7557773e112acbbf056"
     },
     "glm53": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "ddaefdf31468bfd86fa61f0964b464280423cf83416fb226ba151ed784f66bda"
+     "sha256": "de8cea257ff1d4a3a321367669bd0d7f0aefd0dafd144ce1f95ec32edb43d8aa"
     },
     "gpt41": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "4076f59e69095809658f7bd6b5bde63944d45906464e2a0dea7a9c8d538a7fb7"
+     "sha256": "32b57a91209af4ad0b408d3c4e680885d25e8c38deca499678e456e0d8cd5a81"
     },
     "gpt54": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "ee53b3161604d6b9ef7301371369796c233bd68e731a370e81ad01bf6247b83a"
+     "sha256": "e021c91e6278afe366a19e73a88063afbfd4f66c86bd063e9daddd05fb6f1841"
     },
     "gpt56sol": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "cc34d5358f3e16e262959e6a5db182bb23a0f7951b6946f5012ea901dc000c1d"
+     "sha256": "3b415963925bd4e68ce4d93d86b09adc1d5c061550bf7bd46e0cc8212c4a4aaa"
     },
     "gpt56terra": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "f6d4934ac7484bc4243a1d1aa7a5b5fa25b46fc26280a13a6e44189a8275ba72"
+     "sha256": "ef74e512934a4cac9620fb744f3ff07a4fa52963a435bb1d46df708c336557e8"
     },
     "grok45": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "f98cb8907ec0ee390197a59cc83a07309d2b95668367607e18cfe22a0bdf060c"
+     "sha256": "c270ce07f82eebf9da0a99f1876c2a91edb7266b6e226c3e278377cccf088e58"
     },
     "grok46": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "223b1ca3069435dfb184285c02853811e7e7a8df9855346cef983da21ed34245"
+     "sha256": "ecf57be6b193ea2d3a671ced9c7ca753d71a9907bcd4831903445bfcabfacbab"
     },
     "haiku45": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "a31ca4d9d3b73f818dc4b96887a23b43d926582c49ee12d8d2fa219b80229103"
+     "sha256": "c15006866e456601f7f2f9b245d6cc55615672c8fab94b17639e436b748c9ed2"
     },
     "kimik25": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "26565c5235d0a54a6abe64f30816488f710b3412ce9602ff0517dd8ea582bb93"
+     "sha256": "a3e9c5929d8b080856074f04645344855eadec9fcc01ae00ba5372055f69b952"
     },
     "kimik26": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "5b5aa9b787da4dc11ff9a7fd22e112fb90553de0f1d933e1ae6472aaa545eac5"
+     "sha256": "c43692ea9268691b2fe79aebf69c2f57301fee2b71e49f2f243b48bfa4fb5582"
     },
     "kimik27code": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "470313ba486fbf4e450595516977192104c779a43a0a6b698ed44b3b3e785c0c"
+     "sha256": "d2bb70210df3d38ffd55bde171d9bb1a30b20759b8495910e5cb569114aad0b2"
     },
     "kimik3": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "c495e1f446304bb6314f10816928dc0ccd930ac7cf8a1592a3fd3d0e894e5017"
+     "sha256": "ecd31e8ef317969f3a23e14e39238088d7df05279ab861bebf224e3cae1f287f"
     },
     "minimaxm3": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "f0420ee81372e92f70c004b193d4db0fe47b6fca7134ab2cbf534515f3ed1d5c"
+     "sha256": "1387a8d773954fa3fb6dc227fc684c0e42ef2913c7630df9518e6f9cc29a105c"
     },
     "o4mini": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "2bd847695739280a2e8e0ac204f176603d16cb334a0544a2cdc8ad1179100c3f"
+     "sha256": "f5d5c7b7827a64eb7e73b4502b193f8ddfcc2056142bda7e3bdff14728eea40c"
     },
     "opus5": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "98a9a4223fb0f1911589d94498de282669193cd78342e827d82641ff9f925e39"
+     "sha256": "dcdbb776807abeb235ead0a8842cce4b510d5d2d406a224a260c0617d94338cb"
     },
     "qwen35plus": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "4350cb4777986c53c0f705cf5c3fde3eb45c94d61779ed5fda8f3715b117cf1b"
+     "sha256": "6b90c90c73e3b20eaf823a508eea086880ff425d834dc1083ef748a90864a9d4"
     },
     "qwen37plus": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "63dd5f3edc6f33d7875e2d50548383fe7b604e6e5942e1c415af40d910dc15a7"
+     "sha256": "9580dcb0841ba794c1bb8e853e84ff9c3127b53fce0071778dd7c760d336719d"
     },
     "qwen38max": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "e07bef8ca6d4b79e582fbacf0df6ea6cc88120c90396dc66810a2ec38ff1e076"
+     "sha256": "7f275a979b9599d87bd0244f7dd8e1507ce4ff5ca341a3be00eb03a1eb0f962a"
     },
     "qwen3max": {
      "rows": 1000,
      "uids": 1000,
      "parse_fail": 0,
-     "sha256": "fd43024b264abbcefff142ecc25160aa3de14f4eb936ff40e04174ad906bfc01"
+     "sha256": "3a0967515f63e68744b8347b4aa2ef2a8d572433f7b62d780274f127f6fa4a96"
     },
     "sonnet46": {
      "rows": 1000,
      "uids": 1000,
-     "parse_fail": 1,
-     "sha256": "f1b884e9019b357a9848c5023b58c425f785901f8e91c92caa22b59dd3e0c5c5"
+     "parse_fail": 0,
+     "sha256": "30d4e1d937f257012cfa109b21f805cb68533cc79f53dbf56edc759a9b6d894e"
     }
    }
   },
   "swap": {
-   "path": "datasets/chaosnli-mnli-m/votes/swap",
+   "path": "datasets/chaosnli-snli-1000/votes/swap",
    "record_fields": [
     "uid",
     "variant",
@@ -251,14 +251,14 @@
     "parse_fail"
    ],
    "n_files": 32,
-   "n_records": 47000,
-   "parse_fail_cells": 11,
+   "n_records": 48000,
+   "parse_fail_cells": 8,
    "files": {
     "doubao18": {
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "034d5b9a721b6d7e1da5676453747428dab029af7c96e82c3b29ab59de29657a",
+     "sha256": "9b73470973b3cfd871119b51b25b3769a91263324d215b9a2321e6b5de852a07",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -269,7 +269,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "a79fd97e49b81074981d9614cd2843df293cfe73cf5e176cdf1b7ade1a141231",
+     "sha256": "603e40c55e56bbe7ec7a2aa01e054ecb2340d1929f38ae64824db92ed8009321",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -277,19 +277,21 @@
      }
     },
     "dsv32": {
-     "rows": 500,
+     "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "fb04881f3dee319f62879c03be33ef9963ef1487fbd2bdae216da8fdacc17b34",
+     "sha256": "e48d6333b31bea1efdd954d4e306b9844cf1fb7007c7c340660a9da92904a2eb",
      "rows_per_variant": {
-      "0": 500
+      "0": 500,
+      "1": 500,
+      "2": 500
      }
     },
     "dsv4flash": {
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "357d70516507188e1a033c0b0e800793043ca633f6566a847c72ffed3533d7da",
+     "sha256": "2fe9d9f02f01ab897b741ef08a5894d054bfd54bb58ff7b4108bd145a9caa688",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -300,7 +302,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "5b3e4808a8590884c310d6799174802479712d689a6436377d785c1223a9feab",
+     "sha256": "fc55d04fd45544bdef8b1b4f9db87d6346800a667ba3a98b3a95a151c452d112",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -311,7 +313,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "7b387a1fcb28438cdba2439b567153b733af447f600decc9d1ee3393bb8e0ca4",
+     "sha256": "d67c9e84e279bbaf86ff4a25846170ad0db39e021d48d1717c23fc3bc364daf4",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -322,7 +324,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "bae7782b640788a6a4dd3e594a5fd29822775d400bc00eded2394e8d6d8f0caa",
+     "sha256": "95c1d836802170ae53bab4afe9307ce8d5e856601b397f8a611f6b3d058721ab",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -333,7 +335,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "05f700caee0ec2b9d064969ba2225f065702219f0959555c6fcadfd90e5e9055",
+     "sha256": "ff40eeca684de01640d9804e35c23f920998db1891780d113f9d463cc96ee270",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -344,7 +346,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "ca2005b780f1f6d62f37f763af2c5607ccf034c76a01f63e9777b68e0e671813",
+     "sha256": "9b34dcc1fcc62f11b6f7138f6eca3189e3a4322851c6b1dff879e8ec47f415a4",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -355,7 +357,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "e0841700fef41eb95d930b7358722df2fad9479f7d5a44f50470dff806d64bbb",
+     "sha256": "76e7b03acd9c8aa2e5993c0876c59e34d830ee663441c2970c4eb93fc6a6faa1",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -366,7 +368,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "c94e59a138269495c742093756231b386de6047ee007ac2ab76127003bbe15a7",
+     "sha256": "287da58452dd7dd431fd50a381fd1d7c1296405675c7d3e14a58ba036d47daf7",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -377,7 +379,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "24396a88524e67c3a1153876cd1d0fa7b4c6c148247e30ca62a9bdc92de6a50e",
+     "sha256": "cc484186ec45d1d7039f864d87501b3859987b4646d137ea85999bcbe21694db",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -388,7 +390,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "fd656a5509e497789e03f2170dd875e4101839cd4cb42cb26e234862fc58b1b9",
+     "sha256": "e7d869d1905812803758d4af837eafc6a98c98b170bae346dcc3284f153f365e",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -399,7 +401,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "6b7f78232c867e22eadd0e12d94392d43c547f7f8790f46eb0c39c4a8a829c7c",
+     "sha256": "54119ab59daad7ff8e203916c6a18fe8348ab035fce6ddb9e88dc525e199661b",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -410,7 +412,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "f9f4eedac603af087d96512a6c305c770bab3c07df288e8ec13889fb1f8c5059",
+     "sha256": "9d3d91b555896b0f827c548672c1f6d31658ab6dafee389cb6caf9587d4f116b",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -421,7 +423,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "8ea736a3f509d9651fb067716cf976dc436c885301d72ec6aa4c339aceaad442",
+     "sha256": "4cabc10dfe0526b1f2eaa19e81c657adcf2b38c7f0be6529fea055aa4401202b",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -432,7 +434,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "578ef60a1d38b00766d759ef7065baaf3596f9f48ca28784654ab6247626f350",
+     "sha256": "13e981f6ed4c3c1055cb9c29f32f4cba92802c6a0487c450dede224e66da1709",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -443,7 +445,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "6b92594e4c0e685b0465620cc5cc89b3b574ee5297d974daf6f2577d9e06816e",
+     "sha256": "0b3982ef46cfc4480c8bb71a9d7897180c030bbc919b62461b14eb7dcfd46532",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -454,7 +456,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "434710b5a3dfd3ea68de4d93da7cf9d762aadebd93c927c4cd6ae218d3f2a535",
+     "sha256": "87428d6d2e2a153df54fdfb4ba748efe11ef3240944fb2a6aeeda0ea6478192a",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -465,7 +467,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "6cf8f91f6bd4c12ba79dbbefcd3fdce71e352abec9f81f020e84d3fb708ea573",
+     "sha256": "47cafe32b92af56794e839589f0357e1947aeb83acf248d5ba52bb5e229e966f",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -476,7 +478,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "a714cdd2a4a7a6139489950bb3fa2868a0755da7714bbd69ad794f159205da68",
+     "sha256": "cbc6ebb971a2e27a0dbe0bb002007efff4e3f68ca41e1c2b64febf1b067d1c52",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -487,7 +489,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "26e86f36b4f1f3bf75e2ea312bc466acbf43045f6a4e9ad5f35d403f1ef4e39b",
+     "sha256": "5ea574faac5abcb77a56282192fb96713c647c5165728465e51839e9ae045b11",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -498,7 +500,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "adf16f9507dae21f58df3c0e8ff1b225c5aec17e65000147b2542e911b014c87",
+     "sha256": "adf7d7bb8128d644406f1bab54a0b9f9c3ec7ea8c4d741b95b816e0785c4301a",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -509,7 +511,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "f98c7c37a04f4e7279f32c833db96716d7db6d09506b7c5ad425e37edd783f3e",
+     "sha256": "20138f09b6005b525f2f6645ba1c563a08c75b5e01ce5bf4197425d48b1713a8",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -519,8 +521,8 @@
     "minimaxm3": {
      "rows": 1500,
      "uids": 500,
-     "parse_fail": 11,
-     "sha256": "313b995663346127cfa7b67ea435646bd0883352f8d85ca2178b862246bc1875",
+     "parse_fail": 8,
+     "sha256": "d2f1d5eab9da70fd0fb95167e2e34a180ae4ffe3be33918a0fcea430df25388e",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -531,7 +533,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "6c9e56ebee577a5d595da50aa75dad276a317f2599bb58c1a4ab74efbb3d13cb",
+     "sha256": "10fd41b1e7636ca33e1808f83e8085b06cca961a80339ab218e188f1e718126b",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -542,7 +544,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "585a0fac7ef645787123c4c41c7d6041e198bbb7d11d0f947e482d7cc962da03",
+     "sha256": "cff5949dea17dc1245edf1418e4c21621540f91106d03c79a2929c031bdd7644",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -553,7 +555,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "929b7bf892b9b02ca503479ff15a4abf7e7c7f7ea64bdda267618073efa7496e",
+     "sha256": "fecff2ec0d09f9be21aa75bab2d0a63f7806363802a2c38bb8ba92dd7372a94c",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -564,7 +566,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "4f42c4537347885895b2702b483dcab3cd313f90b213343e55d76404576bf0fc",
+     "sha256": "2c28886fb87b429726f0a6973bf90c6eca022dcbd38ab7b2503bd9977946c00c",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -575,7 +577,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "f88585089b90dd779c70d19bbe59fefeb1f7c08aa861eb1c2bbc2ade60c07554",
+     "sha256": "1bc737e00e0e1dbc34f5b4aef34545c46c39bec173f461d96705bb9a20e5d814",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -586,7 +588,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "a970fdb2e0fd6c74b38f0b667267355a512407052c56372fc5bab1c29e11de6d",
+     "sha256": "3c86a75b532808b88d0210362f9f52a09e8a56591043cf6468d3ed4ab84ff144",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -597,7 +599,7 @@
      "rows": 1500,
      "uids": 500,
      "parse_fail": 0,
-     "sha256": "bf9652e481d433a648218047b3b58c7f88f595d63dabb4408bc997aa2f5d775d",
+     "sha256": "843d15a3f24ebb33c97e82f7206cc8cba72ccd0ce9b1566d7a3415c2372ebba2",
      "rows_per_variant": {
       "0": 500,
       "1": 500,
@@ -606,7 +608,7 @@
     }
    },
    "panel_excluded_from_arm_analysis": {
-    "dsv32": "channel died; only variant 0 was ever collected (500 rows), so the arm's panel analysis uses 31 judges"
+    "dsv32": "complete here, but excluded so that one panel is used across datasets (same rule as the baseline arm)"
    }
   }
  },

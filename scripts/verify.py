@@ -11,7 +11,7 @@ For every dataset listed in `datasets/index.json`:
   * the pinned panel roster in `panel/` matches the judges actually present.
 
     python3 scripts/verify.py              # from the repository root
-    python3 scripts/verify.py --dataset chaosnli-snli
+    python3 scripts/verify.py --dataset chaosnli-snli-1000
 
 Exits non-zero if anything mismatches. MIT licensed (see LICENSE-CODE).
 """

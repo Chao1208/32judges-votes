@@ -16,9 +16,9 @@ more corpora to come.
 datasets/<dataset_id>/{manifest.json, README.md, items/uids.txt, votes/<arm>/*.jsonl}
 ```
 
-* `votes/<dataset>/` → `datasets/chaosnli-<dataset>/votes/baseline/`
-* `votes_swap/<dataset>/` → `datasets/chaosnli-<dataset>/votes/swap/`
-* `items/<dataset>_uids.txt` → `datasets/chaosnli-<dataset>/items/uids.txt`
+* `votes/<dataset>/` → `datasets/chaosnli-<dataset>-1000/votes/baseline/`
+* `votes_swap/<dataset>/` → `datasets/chaosnli-<dataset>-1000/votes/swap/`
+* `items/<dataset>_uids.txt` → `datasets/chaosnli-<dataset>-1000/items/uids.txt`
 * `civil_comments/f15_public_scores.json` → `datasets/civil-comments-1000/votes/baseline/scores.json`
 * `civil_comments/f15_public_manifest.json` → `datasets/civil-comments-1000/manifest-source.json`
 * `meta/analysis/` → `reference/`
@@ -40,6 +40,10 @@ datasets/<dataset_id>/{manifest.json, README.md, items/uids.txt, votes/<arm>/*.j
 
 **Changed**
 
+* Dataset ids carry the sample size: `chaosnli-mnli-m-1000`, `chaosnli-snli-1000`,
+  `chaosnli-alphanli-1000`, `civil-comments-1000`. Each released directory is one frozen sample of
+  a corpus, so the size belongs in the id; the analysis CLI keys (`mnli_m` / `snli` / `alphanli`)
+  are unchanged.
 * `scripts/verify.py` now verifies against the per-dataset manifests, covers the Civil Comments
   score file as well (192 files), and checks the pinned panel roster.
 * `scripts/join_chaosnli.py --arm` takes `baseline` / `swap` (was `votes` / `votes_swap`).

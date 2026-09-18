@@ -5,9 +5,9 @@ constant here; the datasets are not, and more will be added. Today:
 
 | dataset | task | items | arms | panel | release |
 |---|---|---|---|---|---|
-| [`chaosnli-mnli-m`](datasets/chaosnli-mnli-m) | 3-way NLI (`e`/`n`/`c`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
-| [`chaosnli-snli`](datasets/chaosnli-snli) | 3-way NLI (`e`/`n`/`c`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
-| [`chaosnli-alphanli`](datasets/chaosnli-alphanli) | abductive 2-way (`1`/`2`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
+| [`chaosnli-mnli-m-1000`](datasets/chaosnli-mnli-m-1000) | 3-way NLI (`e`/`n`/`c`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
+| [`chaosnli-snli-1000`](datasets/chaosnli-snli-1000) | 3-way NLI (`e`/`n`/`c`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
+| [`chaosnli-alphanli-1000`](datasets/chaosnli-alphanli-1000) | abductive 2-way (`1`/`2`) | 1,000 | baseline + presentation-order | 32 | per-item votes |
 | [`civil-comments-1000`](datasets/civil-comments-1000) | binary toxicity (`TOXIC`/`NON-TOXIC`) | 1,000 | baseline | 32 | score-only |
 
 221,474 judged ChaosNLI cells plus 32,000 Civil Comments cells. [`datasets/index.json`](datasets/index.json)
@@ -40,8 +40,10 @@ ANALYSIS.md / REPRODUCE.md                   analysis scope; single-entry reprod
 CHANGELOG.md                                 what changed between releases
 ```
 
-Adding a dataset means adding one directory under `datasets/` and one entry in
-`scripts/build_manifests.py`, then running it. No other dataset's files are touched.
+A dataset id names the corpus **and the sample size** (`chaosnli-snli-1000`,
+`civil-comments-1000`), because a corpus can be sampled more than once and each sample is judged
+by its own panel round. Adding a dataset means adding one directory under `datasets/` and one entry
+in `scripts/build_manifests.py`, then running it. No other dataset's files are touched.
 
 ## Record format
 
@@ -105,7 +107,7 @@ message, no system message, temperature 0, and a constrained answer format.
 
 ```bash
 python3 scripts/verify.py                          # all datasets
-python3 scripts/verify.py --dataset chaosnli-snli   # one dataset
+python3 scripts/verify.py --dataset chaosnli-snli-1000   # one dataset
 ```
 
 For every dataset this checks each manifest against the hash recorded in `datasets/index.json`,

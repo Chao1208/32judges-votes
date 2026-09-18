@@ -1,4 +1,4 @@
-# `chaosnli-mnli-m`
+# `chaosnli-mnli-m-1000`
 
 1,000 items from ChaosNLI's MNLI-matched set, judged by the 32-judge panel pinned in
 [`../../panel/panel-chaosnli.json`](../../panel/panel-chaosnli.json).
@@ -9,7 +9,7 @@
 * **Items**: `items/uids.txt`, in sampling order. Sampled from the full ChaosNLI set, stratified
   into equal thirds by the entropy of the 100-annotator label distribution, seed 42.
 * **Counts and hashes**: [`manifest.json`](manifest.json) — rows, unique uids, `parse_fail` cells
-  and sha256 per file. Verify with `python3 scripts/verify.py --dataset chaosnli-mnli-m`.
+  and sha256 per file. Verify with `python3 scripts/verify.py --dataset chaosnli-mnli-m-1000`.
 
 **Human label distributions are not redistributed here** (ChaosNLI is CC BY-NC 4.0). Join by
 `uid`:

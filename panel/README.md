@@ -6,7 +6,7 @@ exact roster that produced it.
 
 | file | round | datasets |
 |---|---|---|
-| `panel-chaosnli.json` | ChaosNLI collection | `chaosnli-mnli-m`, `chaosnli-snli`, `chaosnli-alphanli` |
+| `panel-chaosnli.json` | ChaosNLI collection | `chaosnli-mnli-m-1000`, `chaosnli-snli-1000`, `chaosnli-alphanli-1000` |
 | `panel-civil-comments-1000.json` | Civil Comments collection | `civil-comments-1000` |
 
 Each file lists, per judge, the `judge_key` used in every vote file, the exact requested

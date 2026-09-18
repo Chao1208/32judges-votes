@@ -2,9 +2,9 @@
  "panel_id": "chaosnli-2026-09",
  "k": 32,
  "used_by": [
-  "chaosnli-mnli-m",
-  "chaosnli-snli",
-  "chaosnli-alphanli"
+  "chaosnli-mnli-m-1000",
+  "chaosnli-snli-1000",
+  "chaosnli-alphanli-1000"
  ],
  "what": "The 32-judge roster for the ChaosNLI collection round. judge_key is the join key used in every vote file; model_id is the exact requested model string.",
  "caveat": "Backend identity/version is not independently authenticated, and `earlier_generation` is retained as recorded metadata, not as evidence of backend chronology or capability.",

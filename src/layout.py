@@ -1,7 +1,7 @@
 """Where a dataset's files live — the one place that knows the layout.
 
 Everything that reads votes goes through here, so a future layout change is one edit rather
-than a grep. Lookups accept either the dataset id (`chaosnli-snli`) or the ChaosNLI subset key
+than a grep. Lookups accept either the dataset id (`chaosnli-snli-1000`) or the ChaosNLI subset key
 the analysis CLI uses (`snli`).
 
 MIT licensed (see LICENSE).
@@ -12,8 +12,8 @@ import json
 from pathlib import Path
 
 # ChaosNLI subset key (used by the analysis CLI and the saved reference values) -> dataset id.
-CHAOSNLI_KEY_TO_ID = {"mnli_m": "chaosnli-mnli-m", "snli": "chaosnli-snli",
-                      "alphanli": "chaosnli-alphanli"}
+CHAOSNLI_KEY_TO_ID = {"mnli_m": "chaosnli-mnli-m-1000", "snli": "chaosnli-snli-1000",
+                      "alphanli": "chaosnli-alphanli-1000"}
 ARM_DIR = {"baseline": "baseline", "swap": "swap"}
 
 
