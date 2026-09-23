@@ -89,11 +89,45 @@ its historical primary table. The orchestrator therefore uses
 `--failure-policy paper-retained` for exact comparison. For a new analysis, use
 the safer default `drop-items`; see [ANALYSIS.md](ANALYSIS.md).
 
+## Selection results (panel-selection section of the paper)
+
+`reference/panel_selection.csv` releases the panels behind the paper's
+panel-selection results so that their values can be checked without rerunning the
+search. One row per (dataset, k, rule), with `rule` in `S0` (accuracy-top-k
+baseline), `A` (maximize `nu_H` subject to higher accuracy than `S0`), `D`
+(maximize accuracy), and `E` (minimize `E` under the same accuracy constraint as
+`A`). `judge_keys` joins to `panel/*.json` and to the vote files.
+
+Conventions behind the columns:
+
+- `acc` never breaks a tie. The item score is `1[gold in M] / |M|` over the set
+  `M` of modal labels, the expectation under uniform tie-breaking. Since
+  `|M| <= 3`, scores scaled by `lcm(1,2,3) = 6` are integers, so
+  `acc_int_sum_lut6` is an exact integer sum and `acc = acc_int_sum_lut6 / (6n)`.
+  This differs from the deterministic-hash majority vote used for the
+  fixed-panel table.
+- `nu_H_closed_form` inverts the analytic reference `PR0(m) = m / (1 + (m-1)d)`
+  rather than the Monte Carlo grid in `reference/calibration_curves.csv`; the two
+  agree to 0.024-0.085 percent on the full 32-judge panels, and the analytic form
+  stays exact below two independent draws, where some baselines fall.
+- `E` is the panel distribution error and `nu_MSE = J / E`; `omega_bar` is the
+  mean member residual energy; `q_bar` is the mean squared off-diagonal entry of
+  the normalized residual Gram matrix, with `PR = k / (1 + (k-1) q_bar)`.
+- `in_joint_improvement_set` marks whether the panel is strictly better than
+  `S0` on both accuracy and `nu_H`; it is blank for `S0` itself.
+
+The candidate set is the at-most-two-swap neighborhood of `S0`, of size
+`k(32-k) + C(k,2)C(32-k,2)`, and every rule breaks ties by enumeration order,
+which lists one-swap candidates first. `reproduce.py` does not run this
+enumeration; the released votes plus these definitions are what a third party
+needs to recompute it.
+
 ## Reproduction boundary
 
 This public workflow verifies the fixed full baseline panel and the paper's saved
-main-table values. It does not reproduce presentation-order analyses, selected
-subpanels, provider-family decompositions, new calibration simulations, split
+main-table values. It does not reproduce presentation-order analyses, the
+panel-selection search itself (its resulting panels and readings are released in
+`reference/panel_selection.csv`), provider-family decompositions, new calibration simulations, split
 stability, member-addition diagnostics, later geometry/loss diagnostics, or
 figure generation. Those boundaries are also written into `summary.json`; a
 successful run must not be reported as an end-to-end reproduction of every paper
