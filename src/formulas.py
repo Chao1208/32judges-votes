@@ -102,6 +102,62 @@ def panel_metrics(idx, human, gold):
             "phi_bar": phi_bar, "n_eff": n_eff, "n_eff_status": n_eff_status}
 
 
+def closed_form_delta(human):
+    """Null mean squared correlation of the analytic human reference, Eq. (5).
+
+    delta = <s2 - 2 s3 + s2^2>_i / (n <1 - s2>_i^2) with s2 = sum_l h_il^2 and
+    s3 = sum_l h_il^3; n is the number of items.
+    """
+    human = np.asarray(human, float)
+    s2, s3 = np.sum(human ** 2, axis=1), np.sum(human ** 3, axis=1)
+    return float(np.mean(s2 - 2. * s3 + s2 ** 2) / (human.shape[0] * np.mean(1. - s2) ** 2))
+
+
+def nu_closed_form(pr, delta):
+    """Invert PR0(m) = m / (1 + (m-1) delta), Eq. (6); NaN where PR >= 1/delta."""
+    pr = np.asarray(pr, float)
+    denominator = 1. - pr * delta
+    with np.errstate(divide="ignore", invalid="ignore"):
+        nu = np.where(denominator > 0., pr * (1. - delta) / denominator, np.nan)
+    return float(nu) if nu.ndim == 0 else nu
+
+
+def pool_asymptote(idx, human, k_project=64):
+    """Fixed-pool extrapolations of the distributional error, Section 4.2 and Appendix C.
+
+    Centered: hold mu2 = ||mean residual||^2, mean member variance v_bar and mean
+    centered covariance rho_bar fixed, so E(m) = mu2 + v_bar (1/m + (1 - 1/m) rho_bar)
+    and E_inf = mu2 + v_bar rho_bar. Uncentered: hold the mean diagonal omega_bar and
+    mean off-diagonal c_K of the Gram matrix fixed, whose limit is c_K.
+    """
+    human = np.asarray(human, float)
+    residual = onehot_panel(idx, human.shape[1]) - human[None, :, :]
+    k, n, _ = residual.shape
+    gram = np.einsum("ail,bil->ab", residual, residual) / n
+    mu = residual.mean(axis=1)
+    mu2 = float(np.sum(mu.mean(axis=0) ** 2))
+    delta_mu = float(np.mean(np.sum((mu - mu.mean(axis=0)) ** 2, axis=1)))
+    error = float(gram.sum()) / k ** 2
+    centered = residual - mu[:, None, :]
+    gamma = float(k * np.mean(np.sum(centered.mean(axis=0) ** 2, axis=1))
+                  / np.sum(np.mean(np.sum(centered ** 2, axis=2), axis=1)))
+    v_bar, rho_bar = (error - mu2) / gamma, (k * gamma - 1.) / (k - 1)
+    human_variance = float(np.mean(1. - np.sum(human ** 2, axis=1)))
+    omega_bar = float(np.mean(np.diag(gram)))
+    c_k = (k * error - omega_bar) / (k - 1)
+    e_inf = mu2 + v_bar * rho_bar
+    e_proj = mu2 + v_bar * (1. / k_project + (1. - 1. / k_project) * rho_bar)
+    return {"k": k, "J": human_variance, "E": error, "mu2": mu2, "gamma_co_all": gamma,
+            "v_bar": v_bar, "rho_bar": rho_bar, "omega_bar": omega_bar, "c_K": c_k,
+            "delta_mu": delta_mu,
+            "nu_MSE_inf_centered": human_variance / e_inf,
+            "nu_MSE_inf_uncentered": human_variance / c_k,
+            "E_gap_rel_pct": 100. * (delta_mu / (k - 1)) / c_k,
+            "observed_share_of_centered_pct": 100. * e_inf / error,
+            "k_project": k_project,
+            "nu_MSE_gain_at_k_project": human_variance / e_proj - human_variance / error}
+
+
 def solve_human_equivalent(ms, pr_means, target):
     """Invert a strictly increasing saved mean-PR curve without extrapolation."""
     ms, ys = np.asarray(ms, float), np.asarray(pr_means, float)

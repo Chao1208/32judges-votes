@@ -34,8 +34,9 @@ schema/                                      JSON Schema for vote records, manif
 scripts/verify.py                            re-check every released file against the manifests
 scripts/build_manifests.py                   regenerate the manifests and the index
 scripts/join_chaosnli.py                     join ChaosNLI's human counts onto the votes
-src/                                         portable fixed-panel analysis code
-reproduce.py                                 integrity -> tests -> paper-table verification
+src/                                         portable analysis code (fixed panel, asymptote,
+                                             calibration, CC-1000, panel selection)
+reproduce.py                                 integrity -> tests -> paper-table -> extended checks
 ANALYSIS.md / REPRODUCE.md                   analysis scope; single-entry reproduction guide
 CHANGELOG.md                                 what changed between releases
 ```
@@ -122,8 +123,9 @@ covered today. `scripts/build_manifests.py --check` fails if any manifest is sta
 python3 reproduce.py --chaosnli /path/to/chaosNLI_v1.0
 ```
 
-Three steps, offline, **0 model/API calls**: archive integrity, analysis unit tests, then the
-saved main-table comparison. See [REPRODUCE.md](REPRODUCE.md) for the step-by-step guide and
+Four steps, offline, **0 model/API calls**: archive integrity, analysis unit tests, the saved
+main-table comparison, then the fixed-pool asymptote, the analytic calibration, the CC-1000 panel
+and the full panel-selection experiment (about 2.5 minutes). See [REPRODUCE.md](REPRODUCE.md) for the step-by-step guide and
 [ANALYSIS.md](ANALYSIS.md) for what the portable CLI does and does not cover. The CLI takes the
 v1.0 dataset keys (`mnli_m`, `snli`, `alphanli`), which still work.
 

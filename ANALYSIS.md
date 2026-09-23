@@ -118,8 +118,10 @@ Not covered: presentation-order analyses, random/selected subpanels, family
 decompositions, calibration simulation, label-mode tests, split stability,
 stable-addition/rank diagnostics, the later geometry/loss diagnostics, or figure generation.
 The full 125,474-row presentation archive is preserved, but the paper's registered
-122,000-row selection is not executed by this CLI. This code does not reproduce
-the whole paper and does not close every reproducibility limitation.
+122,000-row selection is not executed by this CLI. The fixed-pool asymptote, the analytic
+calibration, the CC-1000 panel and the panel-selection experiment are recomputed by
+`src/verify_extended.py` (Step 4 of [REPRODUCE.md](REPRODUCE.md)), not by this CLI. This code does
+not reproduce the whole paper and does not close every reproducibility limitation.
 
 Requested model identifiers are provenance strings, not independently verified
 backend versions. Cached records and separate baseline/presentation-v0

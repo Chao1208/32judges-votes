@@ -17,7 +17,7 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--atol", type=float, default=1e-10)
     parser.add_argument("--verify-archive", action="store_true",
-                        help="also run the data repository's original 191-file integrity verifier")
+                        help="also run the data repository's integrity verifier")
     args = parser.parse_args()
     if args.atol <= 0.:
         parser.error("--atol must be positive")

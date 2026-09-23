@@ -1,4 +1,4 @@
-# Reproduce the paper's public fixed-panel results
+# Reproduce the paper's public results
 
 [中文](REPRODUCE.zh-CN.md)
 
@@ -42,7 +42,8 @@ chaosNLI_alphanli.jsonl
 ```
 
 The reproduction reads only `uid`, `label_counter`, and `majority_label` for the
-1,000 released item IDs per dataset.
+1,000 released item IDs per dataset. CC-1000 needs no external input: its score
+layer already carries the human toxicity counts.
 
 ## Step 4 — Run the whole public reproduction
 
@@ -54,51 +55,74 @@ python reproduce.py \
 
 The offline command makes **0 model/API calls** and runs, in order:
 
-1. integrity checks for all 191 released vote files;
-2. the 11 analysis unit tests;
+1. integrity checks for every released vote file;
+2. the 21 analysis unit tests;
 3. fresh fixed-panel analysis for MNLI-m, SNLI, and alphaNLI, followed by an
-   absolute-tolerance comparison against the paper's saved main-table values.
+   absolute-tolerance comparison against the paper's saved main-table values;
+4. the fixed-pool asymptote, the analytic calibration, the CC-1000 fixed panel,
+   and the full panel-selection experiment, each compared against saved unrounded
+   values and against the numbers printed in the paper.
 
-A successful run ends with `PASS` and writes:
+Step 4 enumerates all C(32,5) = 201,376 and C(32,7) = 3,365,856 panels on each
+of the four datasets and takes about 2.5 minutes on a laptop; the other steps
+take seconds. A successful run ends with `PASS` and writes:
 
 ```text
 results/paper-reproduction/summary.json
 results/paper-reproduction/step1_archive_integrity.log
 results/paper-reproduction/step2_unit_tests.log
 results/paper-reproduction/step3_paper_table.log
+results/paper-reproduction/step4_extended.log
 results/paper-reproduction/paper-table/paper_comparison.json
 results/paper-reproduction/paper-table/*_paper-retained.json
+results/paper-reproduction/extended/extended_comparison.json
 ```
 
 `paper_comparison.json` records expected value, recomputed value, absolute error,
 and pass/fail for every checked metric. The default absolute tolerance is
 `1e-10`; change it only with an explicit `--atol` argument.
+`extended_comparison.json` lists every check of Step 4 with its kind:
+`saved_unrounded` (within `--atol`), `printed_in_paper` (within half a unit of
+the last printed digit), or `printed_in_paper_erratum` (see below).
 `summary.json` also records `model_api_calls: 0` and
 `network_requests_during_run: 0`.
 
 ## Step 5 — Interpret the reproduced metrics
 
-The workflow reproduces the fixed 32-judge baseline-panel values for PR, panel
-distribution error `E`, human disagreement `J`, `nu_MSE`, `gamma_co_all`, binary
-error effective votes `n_eff`, and `nu_H`. Votes and human counts are loaded and
-aligned afresh. `nu_H` is obtained by inverting the released, hash-checked human
-calibration curve; this package does not rerun its Monte Carlo generation.
+**Fixed panel (Step 3).** The workflow reproduces the fixed 32-judge
+baseline-panel values for PR, panel distribution error `E`, human disagreement
+`J`, `nu_MSE`, `gamma_co_all`, binary error effective votes `n_eff`, and `nu_H`.
+Votes and human counts are loaded and aligned afresh. `nu_H` is obtained by
+inverting the released, hash-checked human calibration curve; this package does
+not rerun its Monte Carlo generation.
 
 The paper retained six explicitly flagged deterministic placeholder labels in
 its historical primary table. The orchestrator therefore uses
 `--failure-policy paper-retained` for exact comparison. For a new analysis, use
 the safer default `drop-items`; see [ANALYSIS.md](ANALYSIS.md).
 
-## Selection results (panel-selection section of the paper)
+**Fixed-pool asymptote (Section 4.2, Appendix C).** `src/formulas.py:pool_asymptote`
+holds `mu2 = ||mean residual||^2`, the mean member variance `v_bar`, and the mean
+centered covariance `rho_bar` fixed, so `E(m) = mu2 + v_bar (1/m + (1-1/m) rho_bar)`.
+It reports the centered and uncentered limits of `nu_MSE`, the observed share of
+the centered limit, and the gain from 32 to 64 judges.
 
-`reference/panel_selection.csv` releases the panels behind the paper's
-panel-selection results so that their values can be checked without rerunning the
-search. One row per (dataset, k, rule), with `rule` in `S0` (accuracy-top-k
-baseline), `A` (maximize `nu_H` subject to higher accuracy than `S0`), `D`
-(maximize accuracy), and `E` (minimize `E` under the same accuracy constraint as
-`A`). `judge_keys` joins to `panel/*.json` and to the vote files.
+**Analytic calibration (Section 3.3).** `closed_form_delta` computes
+`delta = <s2 - 2 s3 + s2^2> / (n <1 - s2>^2)` from the human distributions, and
+`nu_closed_form` inverts `PR0(m) = m / (1 + (m-1) delta)` exactly; it is NaN at
+`PR >= 1/delta`.
 
-Conventions behind the columns:
+**CC-1000 (Section 4.9).** `src/civil_comments.py` reads the hash-checked score
+layer, orders items by `id_sha256` and judges by key, and uses
+`h_i = (1 - p_i, p_i)` with `p_i` the toxic share of annotators; gold is
+`1[p_i > 0.5]`, and `n_eff` excludes the 10 items at `p_i = 0.5`. The
+finite-annotation correction is `(J + b) / (E - b)` with
+`b = mean((1 - ||h_i||^2) / (M_i - 1))`. `nu_H` inverts the saved CC-1000 Monte
+Carlo curve in `reference/calibration_curve_civil_comments.csv`.
+
+**Panel selection (Section 4.10, Tables 7-8, Appendix A.7).** `src/selection.py`
+recomputes every selected panel and every enumeration count; the definitions
+follow.
 
 - `acc` never breaks a tie. The item score is `1[gold in M] / |M|` over the set
   `M` of modal labels, the expectation under uniform tie-breaking. Since
@@ -106,29 +130,50 @@ Conventions behind the columns:
   `acc_int_sum_lut6` is an exact integer sum and `acc = acc_int_sum_lut6 / (6n)`.
   This differs from the deterministic-hash majority vote used for the
   fixed-panel table.
-- `nu_H_closed_form` inverts the analytic reference `PR0(m) = m / (1 + (m-1)d)`
-  rather than the Monte Carlo grid in `reference/calibration_curves.csv`; the two
-  agree to 0.024-0.085 percent on the full 32-judge panels, and the analytic form
-  stays exact below two independent draws, where some baselines fall.
+- `nu_H_closed_form` inverts the analytic reference rather than the Monte Carlo
+  grid in `reference/calibration_curves.csv`; on the four full 32-judge panels
+  the two agree to 0.027-0.077 percent, and the analytic form stays exact below
+  two independent draws, where some baselines fall.
 - `E` is the panel distribution error and `nu_MSE = J / E`; `omega_bar` is the
   mean member residual energy; `q_bar` is the mean squared off-diagonal entry of
   the normalized residual Gram matrix, with `PR = k / (1 + (k-1) q_bar)`.
+- `S0` is the `k` best single-judge accuracies, ties by judge key. The candidate
+  set is the at-most-two-swap neighborhood of `S0`, of size
+  `k(32-k) + C(k,2)C(32-k,2)`, listed one-swap first and, within each, by the
+  judges swapped out, then those swapped in.
+- Rule A maximizes `nu_H` over candidates with `acc > acc(S0)`; rule E minimizes
+  `E` over the same set; rule D maximizes `acc`, then `nu_H`. Remaining ties go
+  to the first candidate in the listed order.
 - `in_joint_improvement_set` marks whether the panel is strictly better than
   `S0` on both accuracy and `nu_H`; it is blank for `S0` itself.
 
-The candidate set is the at-most-two-swap neighborhood of `S0`, of size
-`k(32-k) + C(k,2)C(32-k,2)`, and every rule breaks ties by enumeration order,
-which lists one-swap candidates first. `reproduce.py` does not run this
-enumeration; the released votes plus these definitions are what a third party
-needs to recompute it.
+`reference/panel_selection.csv` releases the resulting panels, one row per
+(dataset, k, rule), so they can be checked without running Step 4.
+`judge_keys` joins to `panel/*.json` and to the vote files.
+
+## Known errata in the paper text
+
+Three statements in the current paper version do not match the released
+votes. Step 4 checks each against the corrected value and records the printed
+one; none of them changes a conclusion.
+
+| Location | Printed | Recomputed |
+|---|---|---|
+| Section 3.3, closed form vs Monte Carlo on full panels | 0.024%-0.085% | 0.027%-0.077% |
+| Section 3.3, domain of the closed form | 1/delta >= 518 | min 1/delta = 517.73 (alphaNLI) |
+| Table 8, CC-1000, k = 7, rule D | +15.7 | +15.6 (15.649) |
+
+The Section 3.3 range was computed from Monte Carlo values rounded to three
+decimals.
 
 ## Reproduction boundary
 
-This public workflow verifies the fixed full baseline panel and the paper's saved
-main-table values. It does not reproduce presentation-order analyses, the
-panel-selection search itself (its resulting panels and readings are released in
-`reference/panel_selection.csv`), provider-family decompositions, new calibration simulations, split
-stability, member-addition diagnostics, later geometry/loss diagnostics, or
-figure generation. Those boundaries are also written into `summary.json`; a
-successful run must not be reported as an end-to-end reproduction of every paper
-figure and experiment.
+This public workflow verifies the fixed full baseline panel, the paper's saved
+main-table values, the fixed-pool asymptote, the analytic calibration, the
+CC-1000 fixed panel, and the panel-selection experiment. It does not reproduce
+presentation-order analyses, random subpanel curves, provider-family
+decompositions, new calibration simulations (the Monte Carlo curves are read
+from `reference/`), split stability, member-addition diagnostics, tie-rate
+evidence, later geometry/loss diagnostics, or figure generation. Those
+boundaries are also written into `summary.json`; a successful run must not be
+reported as an end-to-end reproduction of every paper figure and experiment.

@@ -3,6 +3,24 @@
 All released files are byte-identical across these versions unless a row says otherwise. Data was
 never recollected or recomputed; the changes are to layout, tooling and documentation.
 
+## v2.1 — reproduce the rest of the paper's analytic results
+
+No vote file changed. `reproduce.py` gains a fourth step, `src/verify_extended.py`, which
+recomputes from the released votes and checks against saved unrounded values and the printed
+numbers:
+
+* the fixed-pool asymptote (Section 4.2, Appendix C) — `formulas.pool_asymptote`;
+* the analytic calibration `delta` and its inverse (Section 3.3) — `formulas.closed_form_delta`,
+  `formulas.nu_closed_form`;
+* the CC-1000 fixed panel (Section 4.9) — `src/civil_comments.py`, with the Monte Carlo curve in
+  `reference/calibration_curve_civil_comments.csv`;
+* panel selection: rules A/D/E, the full C(32,k) enumeration, Tables 7-8 (Section 4.10) —
+  `src/selection.py`.
+
+Saved values live in `reference/extended_reference.json`. Nine unit tests are added
+(`tests/test_extended.py`, 21 in total). REPRODUCE.md lists three statements in the paper text
+that the recomputation corrects.
+
 ## v2.0 — dataset-extensible layout
 
 **Renamed** `chaosnli-judge-votes` → `32judges-votes`. GitHub redirects the old URL permanently

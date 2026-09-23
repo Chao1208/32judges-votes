@@ -40,8 +40,8 @@ schema/                                      投票记录、manifest、注册表
 scripts/verify.py                            按各数据集 manifest 复核每个已发布文件
 scripts/build_manifests.py                   重新生成各 manifest 与注册表
 scripts/join_chaosnli.py                     把票与 ChaosNLI 的百人标注计数关联起来
-src/                                         便携固定面板分析代码
-reproduce.py                                 完整性检查 → 测试 → 论文主表核验
+src/                                         便携分析代码（固定面板、渐近线、校准、CC-1000、面板选择）
+reproduce.py                                 完整性检查 → 测试 → 论文主表核验 → 扩展核验
 ANALYSIS.zh-CN.md / REPRODUCE.zh-CN.md       分析范围；复现总入口
 CHANGELOG.md                                 两次发布之间改了什么
 ```
