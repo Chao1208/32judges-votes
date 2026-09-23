@@ -8,8 +8,8 @@ abstract: >-
   per-dataset manifests, per-file hashes, the pinned judge roster of each collection round, and
   offline analysis code that makes no model or API calls. Source corpora are not redistributed.
 type: dataset
-version: "2.0"
-date-released: "2026-09-19"
+version: "2.1"
+date-released: "2026-09-23"
 license: CC-BY-4.0
 repository-code: "https://github.com/Chao1208/32judges-votes"
 url: "https://github.com/Chao1208/32judges-votes"
@@ -30,11 +30,13 @@ keywords:
   - toxicity classification
 references:
   - type: article
-    title: >-
-      How Many Humans Is a Judge Panel Worth? Anchoring Effective Panel Size on Human Label
-      Distributions, and What the Shared Error Is Made Of
+    title: "How Many Humans Are 32 LLM Judges Worth?"
     year: 2026
-    notes: "Preprint; this dataset is the paper's data release."
+    identifiers:
+      - type: other
+        value: "arXiv:2609.21277"
+    url: "https://arxiv.org/abs/2609.21277"
+    notes: "Preprint; v1 was posted as 'How Many Humans Is a Judge Panel Worth?'. This dataset is the paper's data release."
     authors:
       - family-names: Li
         given-names: Chao

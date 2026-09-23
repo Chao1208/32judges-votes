@@ -1,6 +1,6 @@
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Copyright (c) 2026 the authors of "How Many Humans Is a Judge Panel Worth?"
+Copyright (c) 2026 the authors of "How Many Humans Are 32 LLM Judges Worth?"
 
 The data in this repository — the judge votes and item id lists under `datasets/`, the pinned
 judge rosters under `panel/`, and the saved derived summaries under `reference/` — are licensed

@@ -16,7 +16,7 @@ ChaosNLI 侧合计 221,474 格判断，Civil Comments 侧另有 32,000 格。
 [`datasets/index.json`](datasets/index.json) 是机器可读的注册表，逐文件哈希在各数据集自己的
 `manifest.json` 里。
 
-这是论文《How Many Humans Is a Judge Panel Worth?》的数据发布（见[引用](#引用)）。发布它的理由
+这是论文《How Many Humans Are 32 LLM Judges Worth?》的数据发布（见[引用](#引用)）。发布它的理由
 很直接：这一线研究至今每篇都要自采一遍逐题投票，票便宜用、贵采。
 
 源语料一律**不转发**：ChaosNLI 是 CC BY-NC 4.0，按 `uid` 自行关联；Civil Comments 是 CC0，本仓库
@@ -166,5 +166,5 @@ ChaosNLI 不在本仓库内、仍按它自己的 **CC BY-NC 4.0** 条款；把�
 ## 引用
 
 用了这些票，请同时引论文与本仓库；BibTeX 条目见 [README.md 的 Citing 一节](README.md#citing)
-（论文条目的 arXiv 编号待预印本挂出后补，现登记为空缺，不填占位数字）。
+（论文为 arXiv:2609.21277；v1 以旧标题《How Many Humans Is a Judge Panel Worth?》挂出）。
 另请引 ChaosNLI——题目与人类标签分布出自它。

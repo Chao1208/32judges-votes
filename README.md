@@ -13,7 +13,7 @@ constant here; the datasets are not, and more will be added. Today:
 221,474 judged ChaosNLI cells plus 32,000 Civil Comments cells. [`datasets/index.json`](datasets/index.json)
 is the machine-readable registry; each dataset's own `manifest.json` holds its per-file hashes.
 
-This is the data release behind *How Many Humans Is a Judge Panel Worth?* (see
+This is the data release behind *How Many Humans Are 32 LLM Judges Worth?* (see
 [Citing](#citing)). It exists because work on judge-panel correlation currently re-collects
 per-item votes from scratch every time: the votes are cheap to consume and expensive to produce.
 Reuse them.
@@ -175,18 +175,19 @@ use.
 
 ```bibtex
 @misc{humans-per-panel-2026,
-  title  = {How Many Humans Is a Judge Panel Worth? Anchoring Effective Panel Size on Human
-            Label Distributions, and What the Shared Error Is Made Of},
-  author = {Li, Chao and Yu, Yingying and Li, Yunfeng},
-  year   = {2026},
-  note   = {Preprint. arXiv identifier to be added once the preprint is posted;
-            this repository is the paper's data release.}
+  title         = {How Many Humans Are 32 LLM Judges Worth?},
+  author        = {Li, Chao and Yu, Yingying and Li, Yunfeng},
+  year          = {2026},
+  eprint        = {2609.21277},
+  archivePrefix = {arXiv},
+  note          = {Preprint; v1 was posted as ``How Many Humans Is a Judge Panel Worth?''.
+                   This repository is the paper's data release.}
 }
 
 @misc{32judges-votes-2026,
   title        = {32judges-votes: per-item votes from a fixed 32-judge LLM panel},
   year         = {2026},
-  version      = {2.0},
+  version      = {2.1},
   howpublished = {\url{https://github.com/Chao1208/32judges-votes}},
   note         = {Data release of the paper above. CC BY 4.0}
 }

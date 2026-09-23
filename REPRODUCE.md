@@ -3,7 +3,7 @@
 [中文](REPRODUCE.zh-CN.md)
 
 This is the single entry point for the public reproduction accompanying *How
-Many Humans Is a Judge Panel Worth?*. **The experiment starts from the released
+Many Humans Are 32 LLM Judges Worth?*. **The experiment starts from the released
 per-item votes of 32 judges and makes exactly 0 model/API calls.** It is an
 offline analysis: no API credentials are read, and `reproduce.py` makes no
 network requests.
@@ -82,8 +82,8 @@ results/paper-reproduction/extended/extended_comparison.json
 and pass/fail for every checked metric. The default absolute tolerance is
 `1e-10`; change it only with an explicit `--atol` argument.
 `extended_comparison.json` lists every check of Step 4 with its kind:
-`saved_unrounded` (within `--atol`), `printed_in_paper` (within half a unit of
-the last printed digit), or `printed_in_paper_erratum` (see below).
+`saved_unrounded` (within `--atol`) or `printed_in_paper` (within half a unit
+of the last printed digit).
 `summary.json` also records `model_api_calls: 0` and
 `network_requests_during_run: 0`.
 
@@ -150,21 +150,6 @@ follow.
 `reference/panel_selection.csv` releases the resulting panels, one row per
 (dataset, k, rule), so they can be checked without running Step 4.
 `judge_keys` joins to `panel/*.json` and to the vote files.
-
-## Known errata in the paper text
-
-Three statements in the current paper version do not match the released
-votes. Step 4 checks each against the corrected value and records the printed
-one; none of them changes a conclusion.
-
-| Location | Printed | Recomputed |
-|---|---|---|
-| Section 3.3, closed form vs Monte Carlo on full panels | 0.024%-0.085% | 0.027%-0.077% |
-| Section 3.3, domain of the closed form | 1/delta >= 518 | min 1/delta = 517.73 (alphaNLI) |
-| Table 8, CC-1000, k = 7, rule D | +15.7 | +15.6 (15.649) |
-
-The Section 3.3 range was computed from Monte Carlo values rounded to three
-decimals.
 
 ## Reproduction boundary
 

@@ -68,7 +68,7 @@ def main() -> int:
         "unit_tests": "PASS",
         "paper_table": comparison,
         "extended": {"pass": extended["pass"], "groups": extended["groups"],
-                     "failed": extended["failed"], "errata": extended["errata"]},
+                     "failed": extended["failed"]},
         "not_reproduced": [
             "presentation-order analyses", "random subpanel curves",
             "provider-family decompositions", "new Monte Carlo calibration",

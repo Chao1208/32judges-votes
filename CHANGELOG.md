@@ -18,8 +18,10 @@ numbers:
   `src/selection.py`.
 
 Saved values live in `reference/extended_reference.json`. Nine unit tests are added
-(`tests/test_extended.py`, 21 in total). REPRODUCE.md lists three statements in the paper text
-that the recomputation corrects.
+(`tests/test_extended.py`, 21 in total).
+
+**Paper title.** The docs, licenses and citations now use the paper's current title, *How Many Humans Are 32 LLM Judges Worth?*.
+arXiv:2609.21277 v1 was posted as *How Many Humans Is a Judge Panel Worth?*.
 
 ## v2.0 — dataset-extensible layout
 

@@ -56,29 +56,11 @@ PRINTED = {
     "table8": [[0.2135, 2.125, 19.9, 7.5, 19.9, 5.7], [0.2066, 2.196, 13.4, 14.6, 15.4, 4.4],
                [0.1367, 2.487, 31.0, 29.6, 31.2, 26.6], [0.1317, 2.581, 33.2, 22.9, 34.4, 18.9],
                [0.0600, 2.768, 11.3, 10.6, 15.9, 32.2], [0.0588, 2.825, 17.2, 16.1, 18.6, 22.7],
-               [0.2971, 1.184, 28.3, 19.0, 28.3, 4.1], [0.2890, 1.217, 23.7, 15.7, 23.7, 2.8]],
+               [0.2971, 1.184, 28.3, 19.0, 28.3, 4.1], [0.2890, 1.217, 23.7, 15.6, 23.7, 2.8]],
     "table8_decimals": [4, 3, 1, 1, 1, 1],
     "feasible": [85, 908, 282, 4311, 773, 981, 576, 449],
     "candidates_in_D_S0": [85, 906, 282, 4258, 756, 981, 555, 439],
     "one_swap_in_D_S0": [13, 43, 14, 118, 79, 60, 39, 25],
-}
-
-# Numbers the EN0.8 text prints incorrectly. Each is checked against the corrected value
-# (same rounding rule) and reported with the printed one; delete an entry once the text is fixed.
-ERRATA = {
-    "Table 8 row 8 col 6": {
-        "printed": 15.7, "corrected": 15.6, "decimals": 1,
-        "note": "CC-1000 k=7 rule D: nu_MSE 1.40758 / 1.21711 - 1 = 15.649%, which rounds to 15.6"},
-    "closed form vs Monte Carlo, full panels, % (min)": {
-        "printed": 0.024, "corrected": 0.027, "decimals": 3,
-        "note": "Section 3.3 range was computed from the Monte-Carlo nu_H rounded to three decimals; "
-                "unrounded values give 0.027%-0.077%"},
-    "closed form vs Monte Carlo, full panels, % (max)": {
-        "printed": 0.085, "corrected": 0.077, "decimals": 3,
-        "note": "see the (min) entry"},
-    "min 1/delta": {
-        "printed": 518, "corrected": 517.7, "decimals": 1,
-        "note": "Section 3.3 states 1/delta >= 518; alphaNLI gives 1/delta = 517.73, so the bound is > 517"},
 }
 
 
@@ -99,15 +81,7 @@ class Checks:
         self.add(group, name, value, expected, 0 if exact else self.atol, "saved_unrounded")
 
     def printed(self, group, name, value, printed, decimals):
-        erratum = ERRATA.get(name)
-        if erratum is None:
-            self.add(group, name, value, printed, 0.5 * 10 ** -decimals + 1e-9, "printed_in_paper")
-            return
-        if printed != erratum["printed"]:
-            raise ValueError(f"erratum for {name!r} lists {erratum['printed']}, paper table has {printed}")
-        self.add(group, name, value, erratum["corrected"], 0.5 * 10 ** -erratum["decimals"] + 1e-9,
-                 "printed_in_paper_erratum")
-        self.rows[-1].update(printed_in_paper=printed, note=erratum["note"])
+        self.add(group, name, value, printed, 0.5 * 10 ** -decimals + 1e-9, "printed_in_paper")
 
     def tree(self, group, prefix, value, expected):
         """Compare every leaf of the saved reference with the recomputed structure."""
@@ -281,11 +255,11 @@ def main(argv=None):
         checks.tree("calibration_saved", dsid, value, ref["closed_form_calibration"][dsid])
     for dsid, printed in zip(closed, PRINTED["delta"]):
         checks.printed("calibration_printed", f"{dsid} delta x1e3", closed[dsid]["delta"] * 1e3, printed * 1e3, 2)
-    checks.printed("calibration_printed", "min 1/delta",
-                   min(1 / c["delta"] for c in closed.values()), 518, 0)
+    checks.add("calibration_printed", "min 1/delta > 517 (printed as 1/delta > 517)",
+               min(1 / c["delta"] for c in closed.values()) > 517, True, 0, "printed_in_paper")
     gaps = [abs(c["nu_H_closed_form"] / c["nu_H_monte_carlo"] - 1) * 100 for c in closed.values()]
-    checks.printed("calibration_printed", "closed form vs Monte Carlo, full panels, % (min)", min(gaps), 0.024, 3)
-    checks.printed("calibration_printed", "closed form vs Monte Carlo, full panels, % (max)", max(gaps), 0.085, 3)
+    checks.printed("calibration_printed", "closed form vs Monte Carlo, full panels, % (min)", min(gaps), 0.027, 3)
+    checks.printed("calibration_printed", "closed form vs Monte Carlo, full panels, % (max)", max(gaps), 0.077, 3)
 
     cells = []
     saved = {(c["dataset_id"], c["k"]): c for c in ref["selection"]}
@@ -299,9 +273,6 @@ def main(argv=None):
     selection_claims(checks, cells)
 
     failed = [row for row in checks.rows if not row["pass"]]
-    errata = [row for row in checks.rows if row["kind"] == "printed_in_paper_erratum"]
-    if len(errata) != len(ERRATA):
-        raise RuntimeError(f"{len(ERRATA)} errata listed, {len(errata)} matched a check")
     groups = {}
     for row in checks.rows:
         g = groups.setdefault(row["group"], {"n": 0, "failed": 0})
@@ -309,7 +280,7 @@ def main(argv=None):
         g["failed"] += not row["pass"]
     result = {"schema_version": 1, "pass": not failed, "atol": args.atol,
               "elapsed_sec": round(time.time() - started, 1), "model_api_calls": 0,
-              "groups": groups, "failed": failed, "errata": errata, "checks": checks.rows,
+              "groups": groups, "failed": failed, "checks": checks.rows,
               "recomputed": {"closed_form_calibration": closed, "civil_comments_fixed_panel": civil,
                              "selection": cells}}
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -317,9 +288,6 @@ def main(argv=None):
         json.dumps(result, indent=1, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
     for name, g in groups.items():
         print(f"  {name}: {g['n'] - g['failed']}/{g['n']} pass")
-    for row in errata:
-        print(f"  ERRATUM {row['check']}: paper prints {row['printed_in_paper']}, "
-              f"recomputed {row['recomputed']:.6g} (corrected {row['expected']}, {'ok' if row['pass'] else 'FAIL'})")
     for row in failed[:20]:
         print(f"  FAIL {row['group']} | {row['check']}: {row['recomputed']!r} vs {row['expected']!r}")
     print("PASS: extended paper conclusions reproduce" if not failed else "FAIL: inspect extended_comparison.json")

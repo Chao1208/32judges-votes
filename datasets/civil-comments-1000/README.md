@@ -2,7 +2,7 @@
 
 A 1,000-item toxicity sample from the Civil Comments (Jigsaw) corpus, judged by the 32-judge panel
 pinned in [`../../panel/panel-civil-comments-1000.json`](../../panel/panel-civil-comments-1000.json).
-This is the external validation reported in *How Many Humans Is a Judge Panel Worth?*
+This is the external validation reported in *How Many Humans Are 32 LLM Judges Worth?*
 
 * **Task**: binary toxicity. Labels `TOXIC` / `NON-TOXIC`.
 * **Release tier**: score-only. One file, `votes/baseline/scores.json`, with per item an

@@ -2,7 +2,7 @@
 
 [English](REPRODUCE.md)
 
-这是论文 *How Many Humans Is a Judge Panel Worth?* 公开复现的总入口。**实验从已发布的
+这是论文 *How Many Humans Are 32 LLM Judges Worth?* 公开复现的总入口。**实验从已发布的
 32 名 judge 逐题投票开始，模型/API 调用严格为 0 次。** `reproduce.py` 不读取 API
 密钥、不发网络请求，全部分析在本地离线完成。
 
@@ -73,8 +73,8 @@ extended/extended_comparison.json
 
 `paper_comparison.json` 记录每个指标的论文值、复算值、绝对误差和是否通过。默认绝对容差
 为 `1e-10`；只有明确需要时才用 `--atol` 修改。`extended_comparison.json` 列出第 4 步
-的每项检查及其类型：`saved_unrounded`（在 `--atol` 之内）、`printed_in_paper`（在印刷
-末位的半个单位之内）或 `printed_in_paper_erratum`（见下文勘误）。
+的每项检查及其类型：`saved_unrounded`（在 `--atol` 之内）或 `printed_in_paper`（在印刷
+末位的半个单位之内）。
 `summary.json` 同时显式记录 `model_api_calls: 0` 与
 `network_requests_during_run: 0`。
 
@@ -125,18 +125,6 @@ Monte Carlo 曲线 `reference/calibration_curve_civil_comments.csv`。
 
 `reference/panel_selection.csv` 发布选出的面板，每个（数据集, k, 规则）一行，不跑第 4 步
 也能核对。`judge_keys` 可关联到 `panel/*.json` 与投票文件。
-
-## 论文正文的已知勘误
-
-当前论文版本有三处表述与公开投票不符。第 4 步按更正值核对，并记录印刷值；它们都不改变结论。
-
-| 位置 | 印刷 | 复算 |
-|---|---|---|
-| 第 3.3 节，完整面板上闭式与 Monte Carlo 之差 | 0.024%–0.085% | 0.027%–0.077% |
-| 第 3.3 节，闭式的定义域 | 1/delta ≥ 518 | 最小 1/delta = 517.73（alphaNLI） |
-| 表 8，CC-1000，k = 7，规则 D | +15.7 | +15.6（15.649） |
-
-第 3.3 节的区间是用取整到三位小数的 Monte Carlo 值算出的。
 
 ## 复现边界
 
