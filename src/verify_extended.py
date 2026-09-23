@@ -2,8 +2,10 @@
 """Recompute the paper's conclusions beyond the fixed-panel table and compare them.
 
 Covers the fixed-pool asymptote (Section 4.2 and Appendix C), the analytic
-calibration (Section 3.3), the CC-1000 external check (Section 4.9) and the panel
-selection results (Section 4.10, Tables 7-8, Appendix A.7). Each quantity is checked
+calibration and its agreement with the Monte-Carlo curves (Section 3.3), the CC-1000
+external check (Section 4.9), the panel selection results (Section 4.10, Tables 7-8,
+Appendix A.7) with their error decomposition, and the selection rerun on the
+placeholder-free items (Appendix D.5). Each quantity is checked
 twice: against the saved unrounded value in reference/extended_reference.json (and
 reference/panel_selection.csv) within --atol, and against the number printed in the
 paper within half a unit of its last printed digit.
@@ -17,6 +19,8 @@ import math
 import sys
 import time
 from pathlib import Path
+
+import numpy as np
 
 if __package__:
     from . import civil_comments as CC
@@ -61,6 +65,11 @@ PRINTED = {
     "feasible": [85, 908, 282, 4311, 773, 981, 576, 449],
     "candidates_in_D_S0": [85, 906, 282, 4258, 756, 981, 555, 439],
     "one_swap_in_D_S0": [13, 43, 14, 118, 79, 60, 39, 25],
+    # Appendix A.7 error decomposition under rule A: ranges of d(omega_bar/k) and -dB, and MNLI-m k=5
+    "decomposition": {"d_omega_over_k": (0.0016, 0.0121), "minus_d_B": (0.0121, 0.0687),
+                      "mnli_k5": (0.0044, -0.0398, -0.0354)},
+    # Appendix D.5 clean-view rerun: max change of accuracy gains (pp), nu_H gains (points), S0 percentile ceiling
+    "clean_view": {"dacc_pp": 0.004, "dnu_points": 0.34, "percentile_ceiling": (47.1, 47.4)},
 }
 
 
@@ -69,6 +78,7 @@ class Checks:
         self.atol, self.rows = atol, []
 
     def add(self, group, name, value, expected, tol, kind):
+        value = value.item() if isinstance(value, np.generic) else value
         if isinstance(expected, (bool, str, list)) or value is None:
             ok = value == expected
         else:
@@ -190,6 +200,79 @@ def selection_claims(checks, cells):
         checks.printed(group, f"Section 4.10: CC-1000 baseline nu_H at k={cell['k']}", p(cell, "S0")["nu_H"], printed, 3)
 
 
+def calibration_claims(checks, curves, cells):
+    """Section 3.3: PR_delta against the Monte-Carlo means on the grid and at the selected panels."""
+    group = "calibration_printed"
+    grid = []
+    for dsid, (ms, prs) in curves.items():
+        delta = next(c["delta"] for c in cells if c["dataset_id"] == dsid)
+        grid += [abs(m / (1. + (m - 1.) * delta) / pr - 1.) * 100. for m, pr in zip(ms, prs)]
+    checks.printed(group, "PR_delta vs Monte-Carlo PR_0, max over every grid point, %", max(grid), 0.18, 2)
+    selected = []
+    for cell in cells:
+        for rule in ("S0", "A", "D", "E"):
+            panel = cell["panels"][rule]
+            nu_mc, status = solve_human_equivalent(*curves[cell["dataset_id"]], panel["PR"])
+            if status == "ok":
+                selected.append(abs(panel["nu_H"] / nu_mc - 1.) * 100.)
+    checks.add(group, "selected panels covered by the Monte-Carlo grid", len(selected), 30, 0, "printed_in_paper")
+    checks.printed(group, "closed form vs Monte Carlo nu_H, selected panels, max %", max(selected), 0.15, 2)
+
+
+def decomposition_claims(checks, pools, cells):
+    """Appendix A.7: E = omega_bar/k + B under rule A relative to S0."""
+    group = "decomposition_printed"
+    rows = []
+    for cell in cells:
+        k, gram = cell["k"], pools[cell["dataset_id"]].gram
+        parts = {}
+        for rule in ("S0", "A"):
+            sub = gram[np.ix_(cell["panels"][rule]["members"], cell["panels"][rule]["members"])]
+            parts[rule] = (np.trace(sub) / k ** 2, (sub.sum() - np.trace(sub)) / k ** 2)
+        rows.append((parts["A"][0] - parts["S0"][0], parts["A"][1] - parts["S0"][1]))
+    d_w, d_b = [r[0] for r in rows], [r[1] for r in rows]
+    checks.add(group, "d(omega_bar/k) > 0 and dB < -d(omega_bar/k) (cases)",
+               sum(w > 0 and b < -w for w, b in rows), 8, 0, "printed_in_paper")
+    for name, values, (low, high) in (("d(omega_bar/k)", d_w, PRINTED["decomposition"]["d_omega_over_k"]),
+                                      ("-dB", [-b for b in d_b], PRINTED["decomposition"]["minus_d_B"])):
+        checks.printed(group, f"{name} (min)", min(values), low, 4)
+        checks.printed(group, f"{name} (max)", max(values), high, 4)
+    w, b, e = PRINTED["decomposition"]["mnli_k5"]
+    checks.printed(group, "MNLI-m k=5 d(omega_bar/k)", d_w[0], w, 4)
+    checks.printed(group, "MNLI-m k=5 dB", d_b[0], b, 4)
+    checks.printed(group, "MNLI-m k=5 dE", d_w[0] + d_b[0], e, 4)
+
+
+def clean_view_claims(checks, args, cells):
+    """Appendix D.5: rerun the selection with every placeholder-touched item dropped."""
+    group = "clean_view_printed"
+    retained = {(c["dataset_id"], c["k"]): c for c in cells}
+    dacc, dnu, same, ceiling = [], [], 0, []
+    for key, dsid in CHAOSNLI.items():
+        panel = load_panel(args.repo_root, key, args.chaosnli / f"chaosNLI_{key}.jsonl", "drop-items")
+        pool = Pool(panel.idx, panel.human, panel.gold, panel.judges)
+        for k in (5, 7):
+            t0 = time.time()
+            clean, old = select(pool, k), retained[(dsid, k)]
+            same += all(clean["panels"][r]["judge_keys"] == old["panels"][r]["judge_keys"] for r in ("S0", "A", "D", "E"))
+            same += all(clean["enumeration"][f] == old["enumeration"][f]
+                        for f in ("n_panels", "n_acc_gt_S0", "n_acc_gt_and_nu_H_gt_S0", "S0_on_pareto_front"))
+            for r in "ADE":
+                gain = lambda c, f: c["panels"][r][f] - c["panels"]["S0"][f]
+                dacc.append(abs(gain(clean, "acc") - gain(old, "acc")) * 100)
+                dnu.append(abs(pct(clean["panels"][r]["nu_H"], clean["panels"]["S0"]["nu_H"])
+                               - pct(old["panels"][r]["nu_H"], old["panels"]["S0"]["nu_H"])))
+            ceiling.append((old["enumeration"]["S0_nu_H_percentile_pct"], clean["enumeration"]["S0_nu_H_percentile_pct"]))
+            print(f"  clean view {dsid} k={k}: {time.time() - t0:.1f}s", flush=True)
+    checks.add(group, "S0, A/D/E members and enumeration counts unchanged (2 per case)", same, 12, 0,
+               "printed_in_paper")
+    checks.printed(group, "max change of accuracy gains, pp", max(dacc), PRINTED["clean_view"]["dacc_pp"], 3)
+    checks.printed(group, "max change of nu_H gains, points", max(dnu), PRINTED["clean_view"]["dnu_points"], 2)
+    old_top, new_top = PRINTED["clean_view"]["percentile_ceiling"]
+    checks.printed(group, "S0 percentile ceiling, retained", max(c[0] for c in ceiling), old_top, 1)
+    checks.printed(group, "S0 percentile ceiling, clean view", max(c[1] for c in ceiling), new_top, 1)
+
+
 def compare_panel_csv(checks, cells, path):
     with open(path, newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -222,7 +305,7 @@ def main(argv=None):
     ref = json.loads((reference_dir / "extended_reference.json").read_text(encoding="utf-8"))
     checks, started = Checks(args.atol), time.time()
 
-    pools, closed = {}, {}
+    pools, closed, curves = {}, {}, {}
     for key, dsid in CHAOSNLI.items():
         panel = load_panel(args.repo_root, key, args.chaosnli / f"chaosNLI_{key}.jsonl", "paper-retained")
         pools[dsid] = Pool(panel.idx, panel.human, panel.gold, panel.judges)
@@ -230,6 +313,7 @@ def main(argv=None):
         checks.tree("asymptote_saved", dsid, asym, ref["pool_asymptote"][dsid])
         metrics = panel_metrics(panel.idx, panel.human, panel.gold)
         curve, _ = load_saved_calibration(reference_dir, key, panel.provenance)
+        curves[dsid] = curve
         delta = closed_form_delta(panel.human)
         closed[dsid] = {"delta": delta, "PR": metrics["PR"], "nu_H_closed_form": nu_closed_form(metrics["PR"], delta),
                         "nu_H_monte_carlo": solve_human_equivalent(*curve, metrics["PR"])[0]}
@@ -241,6 +325,7 @@ def main(argv=None):
 
     cal = ref["civil_comments_calibration"]
     curve = CC.load_curve(reference_dir, cal["sha256"])
+    curves[CC.DATASET] = curve
     civil = CC.fixed_panel(args.repo_root, curve)
     checks.tree("civil_comments_saved", CC.DATASET, civil, ref["civil_comments_fixed_panel"])
     for name, (value, decimals) in PRINTED["civil_comments"].items():
@@ -271,6 +356,9 @@ def main(argv=None):
         print(f"  selection {dsid} k={k}: {time.time() - t0:.1f}s", flush=True)
     compare_panel_csv(checks, cells, reference_dir / "panel_selection.csv")
     selection_claims(checks, cells)
+    calibration_claims(checks, curves, cells)
+    decomposition_claims(checks, pools, cells)
+    clean_view_claims(checks, args, cells)
 
     failed = [row for row in checks.rows if not row["pass"]]
     groups = {}

@@ -103,7 +103,10 @@ def panel_metrics(idx, human, gold):
 
 
 def closed_form_delta(human):
-    """Null mean squared correlation of the analytic human reference, Eq. (5).
+    """Moment approximation to the null mean squared correlation, Eq. (5).
+
+    A ratio of expectations, not the expected squared normalized inner product of
+    two human draws; the two differ at small n.
 
     delta = <s2 - 2 s3 + s2^2>_i / (n <1 - s2>_i^2) with s2 = sum_l h_il^2 and
     s3 = sum_l h_il^3; n is the number of items.
@@ -114,7 +117,7 @@ def closed_form_delta(human):
 
 
 def nu_closed_form(pr, delta):
-    """Invert PR0(m) = m / (1 + (m-1) delta), Eq. (6); NaN where PR >= 1/delta."""
+    """Invert the approximation PR_delta(m) = m / (1 + (m-1) delta), Eq. (6); NaN where PR >= 1/delta."""
     pr = np.asarray(pr, float)
     denominator = 1. - pr * delta
     with np.errstate(divide="ignore", invalid="ignore"):

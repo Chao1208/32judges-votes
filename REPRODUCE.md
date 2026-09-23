@@ -59,13 +59,16 @@ The offline command makes **0 model/API calls** and runs, in order:
 2. the 21 analysis unit tests;
 3. fresh fixed-panel analysis for MNLI-m, SNLI, and alphaNLI, followed by an
    absolute-tolerance comparison against the paper's saved main-table values;
-4. the fixed-pool asymptote, the analytic calibration, the CC-1000 fixed panel,
-   and the full panel-selection experiment, each compared against saved unrounded
-   values and against the numbers printed in the paper.
+4. the fixed-pool asymptote, the analytic calibration and its agreement with the
+   Monte Carlo curves, the CC-1000 fixed panel, the full panel-selection
+   experiment with its error decomposition, and the same selection rerun without
+   placeholder-touched items, each compared against saved unrounded values and
+   against the numbers printed in the paper.
 
 Step 4 enumerates all C(32,5) = 201,376 and C(32,7) = 3,365,856 panels on each
-of the four datasets and takes about 2.5 minutes on a laptop; the other steps
-take seconds. A successful run ends with `PASS` and writes:
+of the four datasets, and again on the three ChaosNLI item sets without
+placeholders; it takes about 4.5 minutes on a laptop, and the other steps take
+seconds. A successful run ends with `PASS` and writes:
 
 ```text
 results/paper-reproduction/summary.json
@@ -108,9 +111,14 @@ It reports the centered and uncentered limits of `nu_MSE`, the observed share of
 the centered limit, and the gain from 32 to 64 judges.
 
 **Analytic calibration (Section 3.3).** `closed_form_delta` computes
-`delta = <s2 - 2 s3 + s2^2> / (n <1 - s2>^2)` from the human distributions, and
-`nu_closed_form` inverts `PR0(m) = m / (1 + (m-1) delta)` exactly; it is NaN at
-`PR >= 1/delta`.
+`delta = <s2 - 2 s3 + s2^2> / (n <1 - s2>^2)` from the human distributions. It is
+a moment approximation: a ratio of expectations, not the expected squared
+normalized inner product between two human draws, and the two differ at small
+`n`. `nu_closed_form` inverts the approximate reference
+`PR_delta(m) = m / (1 + (m-1) delta)` exactly, not the Monte Carlo mean; it is NaN
+at `PR >= 1/delta`. Step 4 checks the agreement the paper reports: at every grid
+point on all four item sets `PR_delta(m)` is within 0.18% of the Monte Carlo mean,
+and on the 30 selected panels the grid covers `nu_H` differs by at most 0.15%.
 
 **CC-1000 (Section 4.9).** `src/civil_comments.py` reads the hash-checked score
 layer, orders items by `id_sha256` and judges by key, and uses
@@ -130,10 +138,11 @@ follow.
   `acc_int_sum_lut6` is an exact integer sum and `acc = acc_int_sum_lut6 / (6n)`.
   This differs from the deterministic-hash majority vote used for the
   fixed-panel table.
-- `nu_H_closed_form` inverts the analytic reference rather than the Monte Carlo
-  grid in `reference/calibration_curves.csv`; on the four full 32-judge panels
-  the two agree to 0.027-0.077 percent, and the analytic form stays exact below
-  two independent draws, where some baselines fall.
+- `nu_H_closed_form` inverts the analytic approximation above rather than the
+  Monte Carlo grid in `reference/calibration_curves.csv`; on the four full
+  32-judge panels the two agree to 0.027-0.077 percent. Unlike the grid, the
+  approximation is defined below two independent draws, where some baselines
+  fall; a value there is a matched unit, not a count of draws.
 - `E` is the panel distribution error and `nu_MSE = J / E`; `omega_bar` is the
   mean member residual energy; `q_bar` is the mean squared off-diagonal entry of
   the normalized residual Gram matrix, with `PR = k / (1 + (k-1) q_bar)`.
@@ -143,7 +152,16 @@ follow.
   judges swapped out, then those swapped in.
 - Rule A maximizes `nu_H` over candidates with `acc > acc(S0)`; rule E minimizes
   `E` over the same set; rule D maximizes `acc`, then `nu_H`. Remaining ties go
-  to the first candidate in the listed order.
+  to the first candidate in the listed order. Accuracy is compared as an exact
+  integer sum; `nu_H` and `E` are compared as double-precision values with no
+  tolerance.
+- Rule A's error change splits as `E = omega_bar/k + B` with the signed cross term
+  `B = k^-2 sum_{a != b} K_ab`: in all eight cases `omega_bar/k` rises and `B` falls
+  by more. `q_bar` squares the normalized inner products and drops their signs,
+  so it is not the quantity that enters `E`.
+- Dropping every item that a placeholder label touches (1 on MNLI-m, 5 on
+  alphaNLI) and rerunning the whole selection leaves `S0`, the A/D/E panels and
+  every enumeration count unchanged.
 - `in_joint_improvement_set` marks whether the panel is strictly better than
   `S0` on both accuracy and `nu_H`; it is blank for `S0` itself.
 

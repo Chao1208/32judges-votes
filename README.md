@@ -125,7 +125,7 @@ python3 reproduce.py --chaosnli /path/to/chaosNLI_v1.0
 
 Four steps, offline, **0 model/API calls**: archive integrity, analysis unit tests, the saved
 main-table comparison, then the fixed-pool asymptote, the analytic calibration, the CC-1000 panel
-and the full panel-selection experiment (about 2.5 minutes). See [REPRODUCE.md](REPRODUCE.md) for the step-by-step guide and
+and the full panel-selection experiment (about 4.5 minutes). See [REPRODUCE.md](REPRODUCE.md) for the step-by-step guide and
 [ANALYSIS.md](ANALYSIS.md) for what the portable CLI does and does not cover. The CLI takes the
 v1.0 dataset keys (`mnli_m`, `snli`, `alphanli`), which still work.
 
@@ -187,7 +187,7 @@ use.
 @misc{32judges-votes-2026,
   title        = {32judges-votes: per-item votes from a fixed 32-judge LLM panel},
   year         = {2026},
-  version      = {2.1},
+  version      = {2.2},
   howpublished = {\url{https://github.com/Chao1208/32judges-votes}},
   note         = {Data release of the paper above. CC BY 4.0}
 }

@@ -1,7 +1,7 @@
 """Panel selection in the fixed pool, Sections 3.6 and 4.10 (MIT; see LICENSE).
 
 Every reading is exact on the observed items: accuracy is an integer sum of tie
-scores scaled by 6, nu_H inverts the analytic reference of Eq. (6), and E uses the
+scores scaled by 6, nu_H inverts the analytic approximation of Eq. (6), and E uses the
 residual Gram identity. The candidate set and all tie-breaking follow the order
 documented in REPRODUCE.md, so the selected panels are deterministic.
 """

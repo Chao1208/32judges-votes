@@ -3,6 +3,14 @@
 All released files are byte-identical across these versions unless a row says otherwise. Data was
 never recollected or recomputed; the changes are to layout, tooling and documentation.
 
+## v2.2 — follow the paper's calibration wording; check the new readings
+
+No vote file changed. The docs and docstrings now call Eq. (5)-(6) a moment approximation to the
+Monte Carlo reference, inverted exactly, instead of an exact form of it. `verify_extended.py` also
+checks the numbers the paper added: the approximation's agreement with the Monte Carlo curves on
+every grid point and on the selected panels, the `E = omega_bar/k + B` decomposition under rule A,
+and the selection rerun on the placeholder-free ChaosNLI items. Step 4 now takes about 4.5 minutes.
+
 ## v2.1 — reproduce the rest of the paper's analytic results
 
 No vote file changed. `reproduce.py` gains a fourth step, `src/verify_extended.py`, which
