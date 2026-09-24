@@ -116,9 +116,10 @@ a moment approximation: a ratio of expectations, not the expected squared
 normalized inner product between two human draws, and the two differ at small
 `n`. `nu_closed_form` inverts the approximate reference
 `PR_delta(m) = m / (1 + (m-1) delta)` exactly, not the Monte Carlo mean; it is NaN
-at `PR >= 1/delta`. Step 4 checks the agreement the paper reports: at every grid
-point on all four item sets `PR_delta(m)` is within 0.18% of the Monte Carlo mean,
-and on the 30 selected panels the grid covers `nu_H` differs by at most 0.15%.
+at `PR >= 1/delta`. Step 4 checks the agreement the paper reports: over every grid
+point on all four item sets the largest gap between `PR_delta(m)` and the Monte Carlo
+mean is 0.18% (0.1845% unrounded), and on the 30 selected panels the grid covers the
+largest `nu_H` difference is 0.15% (0.1502% unrounded).
 
 **CC-1000 (Section 4.9).** `src/civil_comments.py` reads the hash-checked score
 layer, orders items by `id_sha256` and judges by key, and uses

@@ -99,8 +99,9 @@ extended/extended_comparison.json
 `delta = <s2 - 2 s3 + s2^2> / (n <1 - s2>^2)`。它是矩近似：期望之比，而非两次人类抽样间
 归一化内积平方的期望，两者在小 `n` 时不同。`nu_closed_form` 精确反解的是近似参照
 `PR_delta(m) = m / (1 + (m-1) delta)`，而不是 Monte Carlo 均值；在 `PR >= 1/delta` 处为
-NaN。第 4 步核对论文报告的吻合程度：四个题集的每个网格点上 `PR_delta(m)` 与 Monte Carlo 均值
-相差不超过 0.18%，网格覆盖的 30 个选中面板上 `nu_H` 最多相差 0.15%。
+NaN。第 4 步核对论文报告的吻合程度：四个题集全部网格点上 `PR_delta(m)` 与 Monte Carlo 均值的
+最大差距为 0.18%（未舍入 0.1845%），网格覆盖的 30 个选中面板上 `nu_H` 的最大差距为 0.15%
+（未舍入 0.1502%）。
 
 **CC-1000（第 4.9 节）。** `src/civil_comments.py` 读取经哈希核对的分数层，题目按
 `id_sha256` 排序、judge 按 key 排序，取 `h_i = (1 - p_i, p_i)`，`p_i` 为标注者中判毒的
