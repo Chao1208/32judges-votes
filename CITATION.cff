@@ -44,15 +44,3 @@ references:
         given-names: Yingying
       - family-names: Li
         given-names: Yunfeng
-  - type: conference-paper
-    title: "What Can We Learn from Collective Human Opinions on Natural Language Inference Data?"
-    year: 2020
-    collection-title: "Proceedings of EMNLP 2020"
-    notes: "ChaosNLI supplies the items and human label distributions; not redistributed here."
-    authors:
-      - family-names: Nie
-        given-names: Yixin
-      - family-names: Zhou
-        given-names: Xiang
-      - family-names: Bansal
-        given-names: Mohit

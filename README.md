@@ -191,15 +191,6 @@ use.
   howpublished = {\url{https://github.com/Chao1208/32judges-votes}},
   note         = {Data release of the paper above. CC BY 4.0}
 }
-
-@inproceedings{nie2020chaosnli,
-  title     = {What Can We Learn from Collective Human Opinions on Natural Language
-               Inference Data?},
-  author    = {Nie, Yixin and Zhou, Xiang and Bansal, Mohit},
-  booktitle = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language
-               Processing (EMNLP)},
-  year      = {2020}
-}
 ```
 
 Civil Comments comes from the Jigsaw Unintended Bias in Toxicity Classification data (CC0); cite
